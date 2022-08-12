@@ -25,8 +25,6 @@ public class Main {
         // Uses the fermants little theorem and that the only square roots of 1 modulo n are 1 and −1.
         // https://en.wikipedia.org/wiki/Miller%E2%80%93Rabin_primality_test
         // 1024 safe prime iterations is 40
-        // Do we really need safe primes? Explain why not
-        // https://stackoverflow.com/questions/6325576/how-many-iterations-of-rabin-miller-should-i-use-for-cryptographic-safe-primes#:~:text=Only%202%20iterations%2C%20assuming%202,80%20as%20a%20negligibly%20probability.
         int millerRabinIterations = 30;
 
         //TODO explain why I use these exponent values and why they have to be to the power of two
@@ -81,14 +79,6 @@ public class Main {
         Decryptor decryptor = new Decryptor(params, secretKey);
         EncodedText val0Val1Encoded = decryptor.decrypt(val0Val1);
         ArrayList<Complex> val0Val1Decoded = encoder.decode(val0Val1Encoded);
-
-        /*
-        EncodedText val0Val1Decoded = decryptor.decrypt(val0Val1);
-
-        ArrayList<Complex> values0Decoded;
-        ArrayList<Complex> values0DecodedRounded = new ArrayList<>();
-        values0Decoded = encoder.decode(val0Val1Decoded);
-        */
 
         // Super temporary
         // TODO implement it in gui that you can choose precision of result
