@@ -14,7 +14,7 @@ public class Main {
     public static void main(String[] args) {
         // The number of complex numbers in each vector
         // Why does the number need to have a value of 2^x
-        BigInteger polynomialDegree = new BigInteger("8");
+        BigInteger polynomialDegree = new BigInteger("16");
         // TODO explain this!!
         int taylorIterations = 6;
         // The minimum bit size of the primes
@@ -28,9 +28,9 @@ public class Main {
         int millerRabinIterations = 30;
 
         //TODO explain why I use these exponent values and why they have to be to the power of two
-        BigInteger moduloBig = BigInteger.TWO.pow(1200);
-        BigInteger moduloSmall = BigInteger.TWO.pow(600);
-        BigInteger scalingFactor = BigInteger.TWO.pow(30);
+        BigInteger moduloBig = BigInteger.TWO.pow(2000);
+        BigInteger moduloSmall = BigInteger.TWO.pow(1200);
+        BigInteger scalingFactor = BigInteger.TWO.pow(40);
 
         // How many decimals you want to keep for each BigDecimal calculation
         MathContext mc = new MathContext(100);
@@ -49,16 +49,24 @@ public class Main {
         ArrayList<Complex> values0 = new ArrayList<>();
         ArrayList<Complex> values1 = new ArrayList<>();
 
-        BigDecimal twoBD = new BigDecimal("2");
+        BigDecimal twoBD = new BigDecimal("2.40");
         BigDecimal threeBD = new BigDecimal("3");
 
-        //[(2,0),(2,3),(3,0),(0,3)]
+        //[(2,0),(2,3),(3,0),(0,3),(2,0),(2,0),(3,0),(2,2)]
+        values0.add(new Complex(twoBD, BigDecimal.ZERO));
+        values0.add(new Complex(twoBD, threeBD));
+        values0.add(new Complex(threeBD, BigDecimal.ZERO));
+        values0.add(new Complex(BigDecimal.ZERO,threeBD));
         values0.add(new Complex(twoBD, BigDecimal.ZERO));
         values0.add(new Complex(twoBD, threeBD));
         values0.add(new Complex(threeBD, BigDecimal.ZERO));
         values0.add(new Complex(BigDecimal.ZERO,threeBD));
 
-        //[(2,0),(2,0),(3,0),(2,2)]
+        //[(2,0),(2,0),(3,0),(2,2),(2,0),(2,0),(3,0),(2,2)]
+        values1.add(new Complex(twoBD, BigDecimal.ZERO));
+        values1.add(new Complex(twoBD, BigDecimal.ZERO));
+        values1.add(new Complex(threeBD, BigDecimal.ZERO));
+        values1.add(new Complex(twoBD,twoBD));
         values1.add(new Complex(twoBD, BigDecimal.ZERO));
         values1.add(new Complex(twoBD, BigDecimal.ZERO));
         values1.add(new Complex(threeBD, BigDecimal.ZERO));
