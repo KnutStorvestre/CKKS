@@ -12,19 +12,17 @@ public class Parameters {
     private final BigInteger smallModulo;
     private final BigInteger scalingFactor;
     private final int primeBitSize;
-    private final int taylorIterations;
     private final int millerRabinIterations;
     private final MathContext mathContext;
     private ChineseRemainderTheorem crt;
 
     public Parameters(BigInteger polyDeg, BigInteger bigMod, BigInteger smallMod, BigInteger scaling,
-                      int primeBitSizeNum, int taylorIterationsNum, int millerRabinIterationsNum, MathContext mc){
+                      int primeBitSizeNum, int millerRabinIterationsNum, MathContext mc){
         polynomialDegree = polyDeg;
         bigModulo = bigMod;
         smallModulo = smallMod;
         scalingFactor = scaling;
         primeBitSize = primeBitSizeNum;
-        taylorIterations = taylorIterationsNum;
         millerRabinIterations = millerRabinIterationsNum;
         mathContext = mc;
 

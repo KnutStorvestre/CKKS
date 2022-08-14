@@ -89,5 +89,6 @@ public class VectorInput {
                 createAndShowGUI(sizeVector, numVectors);
             }
         });
+        System.out.println("hei");
     }
 }

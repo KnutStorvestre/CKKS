@@ -16,7 +16,6 @@ public class Main {
         // Why does the number need to have a value of 2^x
         BigInteger polynomialDegree = new BigInteger("16");
         // TODO explain this!!
-        int taylorIterations = 6;
         // The minimum bit size of the primes
         // TODO write about why its smart to have big primes
         int bitPrimeSize = 60;
@@ -37,7 +36,7 @@ public class Main {
 
         // TODO explain why we use parameters
         Parameters params = new Parameters(polynomialDegree,moduloBig, moduloSmall, scalingFactor, bitPrimeSize,
-                taylorIterations, millerRabinIterations, mc);
+                 millerRabinIterations, mc);
 
         KeyGenerator keyGen = new KeyGenerator(params);
         SecretKey secretKey = keyGen.getSecretKey();
