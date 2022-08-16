@@ -69,7 +69,7 @@ public class Polynomial {
             for (Polynomial tmpPoly : products) {
                 values.add(tmpPoly.getCoefficients()[i]);
             }
-            reconstructedValues[i] = crt.reconstruct(values);
+            reconstructedValues[i] = crt.recover(values);
         }
 
         return new Polynomial(polynomialDegree, reconstructedValues).moduloSmall(crt.getModulo());

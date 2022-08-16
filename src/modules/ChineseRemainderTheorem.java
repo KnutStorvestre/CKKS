@@ -2,7 +2,6 @@ package modules;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.NoSuchElementException;
 import java.util.Random;
 
 public class ChineseRemainderTheorem {
@@ -39,7 +38,6 @@ public class ChineseRemainderTheorem {
              modulo = modulo.multiply(prime);
         }
 
-        // aka crt context
         // creates crt inverse values and crt values
         // crtVal = mod // prime[i]
         // crtInvVal = crtVal^(mod-2) % mod
@@ -138,7 +136,7 @@ public class ChineseRemainderTheorem {
 
     //TODO should have a better name!!
     //Todo this should also be better explained
-    public BigInteger reconstruct(ArrayList<BigInteger> vals){
+    public BigInteger recover(ArrayList<BigInteger> vals){
         BigInteger repVal = BigInteger.ZERO;
         //TODO this should have a better name
         BigInteger tmpVal;

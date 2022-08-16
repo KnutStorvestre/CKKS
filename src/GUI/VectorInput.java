@@ -36,36 +36,70 @@ package GUI;/*
  */
 
 import javax.swing.*;
+import java.awt.*;
 
 public class VectorInput {
+
+    private int sizeVec;
+    private int numVec;
+
+    public VectorInput(int sizeVector, int numVector){
+        sizeVec = sizeVector;
+        numVec = numVector;
+    }
+
     /**
      * Create the GUI and show it.  For thread safety,
      * this method should be invoked from the
      * event-dispatching thread.
      */
-    private static void createAndShowGUI(int sizeVector, int numVector) {
+    public void createAndShowGUI() {
         //Create the panel and populate it.
         JPanel panel = new JPanel(new SpringLayout());
-        for (int i = 0; i < sizeVector*numVector; i++) {
-            JTextField textField = new JTextField(Integer.toString(i));
+        for (int i = 0; i < 2*(sizeVec*numVec); i++) {
+            JTextField textField = new JTextField(Integer.toString(0));
 
-            //Make the 4th field extra big.
-            if (i == 1) {
-                textField.setText("This one is extra long.");
+            if (i < 2*numVec) {
+                if (i % 2 == 0) {
+                    textField.setText("Real");
+                    textField.setEditable(false);
+                } else {
+                    textField.setText("Imaginary");
+                    textField.setEditable(false);
+                }
             }
 
             panel.add(textField);
         }
 
 
+        SpringUtilities su0 = new SpringUtilities();
+
         //Lay out the panel.
-        SpringUtilities.makeGrid(panel,
-                sizeVector, numVector, //rows, cols
+        su0.makeGrid(panel,
+                sizeVec, 2*numVec, //rows, cols
                 5, 5, //initialX, initialY
                 5, 5);//xPad, yPad
 
+        SpringUtilities su1 = new SpringUtilities();
+
+        JPanel panelVectorNum = new JPanel(new SpringLayout());
+        for (int i = 0; i < numVec; i++) {
+            JTextField textField = new JTextField();
+            textField.setText("Vector " + i);
+
+        }
+
+        /*
+        su1.makeGrid(panelVectorNum,
+                1, numVec, //rows, cols
+                10, 10, //initialX, initialY
+                5, 5);//xPad, yPad
+         */
+
+
         //Create and set up the window.
-        JFrame frame = new JFrame("SpringGrid");
+        JFrame frame = new JFrame("CKKS Encryption");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Set up the content pane.
@@ -77,18 +111,6 @@ public class VectorInput {
         frame.setVisible(true);
     }
 
-    public static void main(String[] args) {
-        //Schedule a job for the event-dispatching thread:
-        //creating and showing this application's GUI.
 
-        int sizeVector = 4;
-        int numVectors = 4;
 
-        SwingUtilities.invokeLater(new Runnable() {
-            public void run() {
-                createAndShowGUI(sizeVector, numVectors);
-            }
-        });
-        System.out.println("hei");
-    }
 }
