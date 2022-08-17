@@ -1,11 +1,11 @@
-package GUI.newest;
+package GUI;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class Easy implements ActionListener {
+public class VectorSizeNumGUI implements ActionListener{
 
     private static JLabel numVectorsLable;
     private static JTextField numVectorsTF;
@@ -14,8 +14,10 @@ public class Easy implements ActionListener {
     private static JButton DoneButton;
     private static JLabel success;
     private static JFrame frame;
+    private static int vectorSize;
+    private static int numVectors;
 
-    public static void main(String[] args) {
+    public VectorSizeNumGUI() {
         JPanel panel = new JPanel();
         frame = new JFrame();
         frame.setSize(350, 200);
@@ -25,25 +27,25 @@ public class Easy implements ActionListener {
 
         panel.setLayout(null);
 
-        numVectorsLable = new JLabel("Number of Vectors");
-        numVectorsLable.setBounds(10,20,80,25);
+        numVectorsLable = new JLabel("Num of vectors");
+        numVectorsLable.setBounds(10,20,120,25);
         panel.add(numVectorsLable);
 
         numVectorsTF = new JTextField();
-        numVectorsTF.setBounds(100, 20, 165, 25);
+        numVectorsTF.setBounds(110, 20, 165, 25);
         panel.add(numVectorsTF);
 
         vectorSizeLabel = new JLabel("Size of vectors");
-        vectorSizeLabel.setBounds(10,50,80,25);
+        vectorSizeLabel.setBounds(10,50,104,25);
         panel.add(vectorSizeLabel);
 
         vectorSizeTF = new TextField();
-        vectorSizeTF.setBounds(100, 50, 165, 25);
+        vectorSizeTF.setBounds(110, 50, 165, 25);
         panel.add(vectorSizeTF);
 
         DoneButton = new JButton("Done");
         DoneButton.setBounds(10,80,80,25);
-        DoneButton.addActionListener(new Easy());
+        DoneButton.addActionListener(this);
         panel.add(DoneButton);
 
         success = new JLabel("");
@@ -53,27 +55,31 @@ public class Easy implements ActionListener {
         frame.setVisible(true);
     }
 
+    //TODO how to add action listner
     @Override
     public void actionPerformed(ActionEvent e) {
-        String numVextorsStr = numVectorsTF.getText();
+        String numVectorsStr = numVectorsTF.getText();
         String vectorSizeStr = vectorSizeTF.getText();
-        System.out.println(numVextorsStr + ", " + vectorSizeStr);
+        System.out.println(numVectorsStr + ", " + vectorSizeStr);
 
-        if (isInteger(numVextorsStr)){
-            int numVectors = Integer.parseInt(numVextorsStr);
-            if (numVectors > 10 || numVectors < 1) {
+        if (isInteger(numVectorsStr)){
+            int numVectorsTmp = Integer.parseInt(numVectorsStr);
+            if (numVectorsTmp > 10 || numVectorsTmp < 1) {
                 success.setText("Number of Vectors must be less than 10 and more than 0");
             }
             else {
                 if (isInteger(vectorSizeStr)){
-                    int vectorSize = Integer.parseInt(vectorSizeStr);
-                    if (vectorSize > 32 || vectorSize < 2) {
-                        success.setText("Number of Vectors must be < 33 and positive");
-                    } else if (!(((Math.log(vectorSize) / Math.log(2)) % 1) == 0)) {
-                        success.setText("Number is not the power of two");
+                    int vectorSizeTmp = Integer.parseInt(vectorSizeStr);
+                    if (vectorSizeTmp > 32 || vectorSizeTmp < 1) {
+                        success.setText("Size of Vectors must be < 33 and positive");
+                    } else if (!(((Math.log(vectorSizeTmp) / Math.log(2)) % 1) == 0)) {
+                        success.setText("Size is not the power of two");
                     }
                     else {
-                        success.setText("WOW");
+                        success.setText("Success");
+                        vectorSize = vectorSizeTmp;
+                        numVectors = numVectorsTmp;
+                        frame.dispose();
                     }
                 }
                 else {
@@ -88,12 +94,6 @@ public class Easy implements ActionListener {
 
      }
 
-     public static boolean isPowerOfTwo(int num){
-        double log2Val = Math.log(num) / Math.log(2);
-        System.out.println(log2Val);
-        return false;
-     }
-
      public static boolean isInteger(String str){
         try {
             int a = Integer.parseInt(str);
@@ -103,4 +103,5 @@ public class Easy implements ActionListener {
             return false;
         }
      }
+
 }

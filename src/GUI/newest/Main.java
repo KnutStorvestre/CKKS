@@ -1,6 +1,6 @@
 package GUI.newest;
 
-import GUI.VectorInput;
+import GUI.old.VectorInput;
 
 import javax.swing.*;
 

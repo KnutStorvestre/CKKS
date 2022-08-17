@@ -1,4 +1,4 @@
-package GUI;/*
+package GUI.old;/*
  * Copyright (c) 1995, 2008, Oracle and/or its affiliates. All rights reserved.
  *
  * Redistribution and use in source and binary forms, with or without
@@ -36,7 +36,6 @@ package GUI;/*
  */
 
 import javax.swing.*;
-import java.awt.*;
 
 public class VectorInput {
 

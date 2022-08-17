@@ -18,23 +18,36 @@ public class NumberTheory {
         return val.modPow(primeMod.subtract(BigInteger.TWO), primeMod);
     }
 
-    // TODO explain what a primitive element is
-    // Explain what theorem I am using to find the primitive element
-    public BigInteger findPrimitiveElementPrime(BigInteger prime){
-        BigInteger[] primeFactors = new BigInteger[]{prime.divide(BigInteger.TWO), BigInteger.TWO};
-        BigInteger possiblePrimitiveElement = BigInteger.ONE;
 
+    public BigInteger findPrimitiveElementPrime(BigInteger prime, BigInteger order){
+        BigInteger possiblePrimitiveElement = BigInteger.TWO;
+        int orderLog2 = (int) (Math.log(order.doubleValue()) / Math.log(2));
+
+        BigInteger exponentDivider;
         while (possiblePrimitiveElement.compareTo(prime) < 0){
-            possiblePrimitiveElement = possiblePrimitiveElement.add(BigInteger.ONE);
-            if (!(possiblePrimitiveElement.modPow(primeFactors[0], prime).equals(BigInteger.ONE))){
-                break;
+            for (int i = 1; i < orderLog2; i++) {
+                exponentDivider = BigInteger.TWO.pow(i);
+                if ((possiblePrimitiveElement.modPow(prime.divide(exponentDivider), prime).equals(BigInteger.ONE))){
+                    break;
+                }
+                if (i == orderLog2-1){
+                    return possiblePrimitiveElement;
+                }
             }
+            possiblePrimitiveElement = possiblePrimitiveElement.add(BigInteger.ONE);
         }
-        return possiblePrimitiveElement;
+        System.out.println("No primitive element was found");
+        return null;
     }
 
+    /**
+     *
+     * @param order 2*polynomialDegree
+     * @param mod
+     * @return
+     */
     public BigInteger rootOfUnity(BigInteger order, BigInteger mod){
-        BigInteger primitiveElement = findPrimitiveElementPrime(mod);
+        BigInteger primitiveElement = findPrimitiveElementPrime(mod, order);
 
         BigInteger rootOfUnity = primitiveElement.modPow(mod.subtract(BigInteger.ONE).divide(order), mod);
 
