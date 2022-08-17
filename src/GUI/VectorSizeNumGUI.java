@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class VectorSizeNumGUI implements ActionListener{
 
@@ -17,12 +18,12 @@ public class VectorSizeNumGUI implements ActionListener{
     private static int vectorSize;
     private static int numVectors;
 
+
     public VectorSizeNumGUI() {
         JPanel panel = new JPanel();
         frame = new JFrame();
-        frame.setSize(350, 200);
+        frame.setSize(520, 200);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setVisible(true);
         frame.add(panel);
 
         panel.setLayout(null);
@@ -49,7 +50,7 @@ public class VectorSizeNumGUI implements ActionListener{
         panel.add(DoneButton);
 
         success = new JLabel("");
-        success.setBounds(10,110,300,25);
+        success.setBounds(10,110,500,25);
         panel.add(success);
 
         frame.setVisible(true);
