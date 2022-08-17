@@ -25,12 +25,12 @@ public class NumberTheory {
 
         BigInteger exponentDivider;
         while (possiblePrimitiveElement.compareTo(prime) < 0){
-            for (int i = 1; i < orderLog2; i++) {
+            for (int i = 1; i < orderLog2+1; i++) {
                 exponentDivider = BigInteger.TWO.pow(i);
                 if ((possiblePrimitiveElement.modPow(prime.divide(exponentDivider), prime).equals(BigInteger.ONE))){
                     break;
                 }
-                if (i == orderLog2-1){
+                if (i == orderLog2){
                     return possiblePrimitiveElement;
                 }
             }
