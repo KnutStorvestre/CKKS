@@ -18,7 +18,7 @@ public class Main {
         // TODO explain this!!
         // The minimum bit size of the primes
         // TODO write about why its smart to have big primes
-        int bitPrimeSize = 60;
+        int bitPrimeSize = 500;
         // Miller-Rabin is an algorithm to test if a number is prime
         // having a high number of miller rabin iterations makes it less to get false positives
         // Uses the fermants little theorem and that the only square roots of 1 modulo n are 1 and −1.
