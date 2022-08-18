@@ -80,6 +80,7 @@ public class VectorSizeNumGUI implements ActionListener{
                         success.setText("Success");
                         vectorSize = vectorSizeTmp;
                         numVectors = numVectorsTmp;
+                        FillInVectors b = new FillInVectors(numVectors, vectorSize);
                         frame.dispose();
                     }
                 }
