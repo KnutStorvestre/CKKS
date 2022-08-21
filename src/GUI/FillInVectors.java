@@ -3,6 +3,7 @@ package GUI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class FillInVectors {
 
@@ -13,6 +14,7 @@ public class FillInVectors {
     private static ArrayList<JLabel> vectorValuesLabel;
     private static boolean[] validVectors;
     private static JLabel nextButtonErrorMsg;
+    private static double[][] vectors;
 
     public FillInVectors(int numberVectors, int vectorLength){
         numVectors = numberVectors;
@@ -20,6 +22,7 @@ public class FillInVectors {
         textFieldsVectors = new ArrayList<>(numVectors);
         vectorValuesLabel = new ArrayList<>(numVectors);
         validVectors = new boolean[numberVectors];
+        vectors = new double[numberVectors][vectorLength];
 
         frame = new JFrame();
         frame.setSize(1000, 520);
@@ -89,6 +92,8 @@ public class FillInVectors {
                         return;
                     }
                 }
+                //
+                CkksOperations a = new CkksOperations(vectors,vectorSize,numVectors);
                 frame.dispose();
             }
         });
@@ -105,6 +110,7 @@ public class FillInVectors {
                 }
                 else {
                     String labelFormattedInputVector = "[";
+
                     for (int i = 0; i < processedVector.length; i++) {
                         if (i%2== 1){
                             if (processedVector[i] >= 0){
@@ -117,6 +123,7 @@ public class FillInVectors {
                             labelFormattedInputVector += processedVector[i];
                         }
                     }
+                    vectors[vectorIndex] = processedVector;
                     validVectors[vectorIndex] = true;
                     labelFormattedInputVector = labelFormattedInputVector.substring(0,labelFormattedInputVector.length()-1) + "]";
                     vectorValuesLabel.get(vectorIndex).setText(labelFormattedInputVector);

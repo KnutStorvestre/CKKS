@@ -1,3 +1,4 @@
+package CKKS;
 
 import data.Ciphertext;
 import data.EncodedText;

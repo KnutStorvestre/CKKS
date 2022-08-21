@@ -55,7 +55,7 @@ public class GuiTest2 {
 * primitive elements
 * Chinese remainder theorem
 * CKKS encryption
-* Encoder
+* CKKS.Encoder
 * Encryptor
 * Evaluator
 * KeyGenerator

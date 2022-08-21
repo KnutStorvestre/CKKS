@@ -1,3 +1,5 @@
+package CKKS;
+
 import data.Ciphertext;
 import data.EncodedText;
 import keys.PublicKey;
@@ -38,11 +40,10 @@ public class Main {
         Parameters params = new Parameters(polynomialDegree,moduloBig, moduloSmall, scalingFactor, bitPrimeSize,
                  millerRabinIterations, mc);
 
-        KeyGenerator keyGen = new KeyGenerator(params);
+        KeyGeneratorCKKS keyGen = new KeyGeneratorCKKS(params);
         SecretKey secretKey = keyGen.getSecretKey();
         PublicKey publicKey = keyGen.getPublicKey();
         PublicKey relinearizationKey = keyGen.getRelinearizationKey();
-
 
         // This is just for testing the input will be handled by the GUI
         ArrayList<Complex> values0 = new ArrayList<>();

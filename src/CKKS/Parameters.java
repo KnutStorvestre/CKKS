@@ -1,3 +1,5 @@
+package CKKS;
+
 import ch.obermuhlner.math.big.BigDecimalMath;
 import modules.ChineseRemainderTheorem;
 

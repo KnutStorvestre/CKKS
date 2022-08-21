@@ -98,7 +98,7 @@ public class VectorInput {
 
 
         //Create and set up the window.
-        JFrame frame = new JFrame("CKKS Encryption");
+        JFrame frame = new JFrame("CKKS CKKS.Encryption");
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         //Set up the content pane.

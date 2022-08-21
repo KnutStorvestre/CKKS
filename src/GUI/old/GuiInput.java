@@ -33,7 +33,7 @@ public class GuiInput {
      */
     public int selectNumberVectors(){
         JFrame frame = new JFrame();
-        frame.setTitle("CKKS Encryption");
+        frame.setTitle("CKKS CKKS.Encryption");
 
         JTextField txtField = new JTextField(20);
         frame.add(txtField);

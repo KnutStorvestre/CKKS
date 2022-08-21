@@ -6,7 +6,7 @@ import java.awt.*;
 public class manyPanels {
 
     public static void main(String[] args) {
-        JFrame frame = new JFrame("CKKS Encryption");
+        JFrame frame = new JFrame("CKKS CKKS.Encryption");
 
         JPanel p0 = new JPanel();
         JPanel p1 = new JPanel();

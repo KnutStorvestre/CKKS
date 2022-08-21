@@ -1,3 +1,5 @@
+package CKKS;
+
 import keys.PublicKey;
 import keys.SecretKey;
 import modules.NumberTheory;
@@ -5,7 +7,7 @@ import modules.Polynomial;
 
 import java.math.BigInteger;
 
-public class KeyGenerator {
+public class KeyGeneratorCKKS {
 
     private Parameters parameters;
     private SecretKey secretKey;
@@ -14,7 +16,7 @@ public class KeyGenerator {
     private NumberTheory numTheory;
 
 
-    public KeyGenerator(Parameters params){
+    public KeyGeneratorCKKS(Parameters params){
         parameters = params;
         numTheory = new NumberTheory();
 

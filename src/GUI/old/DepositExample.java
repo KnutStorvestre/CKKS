@@ -10,7 +10,7 @@ public class DepositExample {
     JButton ok, cancel;
 
     DepositExample() {
-        frame = new JFrame("CKKS Encryption");
+        frame = new JFrame("CKKS CKKS.Encryption");
 
         buttonPane = new JPanel();
         fieldsPanel = new JPanel();
