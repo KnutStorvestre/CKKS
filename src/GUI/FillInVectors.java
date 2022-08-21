@@ -3,29 +3,27 @@ package GUI;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Objects;
 
 public class FillInVectors {
 
     private static JFrame frame;
     private static int vectorSize;
     private static int numVectors;
-    private static ArrayList<JTextField> textFields;
-    private static ArrayList<JLabel> successLabels;
-
+    private static ArrayList<JTextField> textFieldsVectors;
+    private static ArrayList<JLabel> vectorValuesLabel;
+    private static boolean[] validVectors;
+    private static JLabel nextButtonErrorMsg;
 
     public FillInVectors(int numberVectors, int vectorLength){
         numVectors = numberVectors;
         vectorSize = vectorLength;
-        textFields = new ArrayList<>(numVectors);
-        successLabels = new ArrayList<>(numVectors);
+        textFieldsVectors = new ArrayList<>(numVectors);
+        vectorValuesLabel = new ArrayList<>(numVectors);
+        validVectors = new boolean[numberVectors];
 
         frame = new JFrame();
         frame.setSize(1000, 520);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
-
 
         JPanel panel = new JPanel();
         panel.setLayout(null);
@@ -40,6 +38,14 @@ public class FillInVectors {
             createTextFieldLabelButton(panel,yVal, i);
             yVal += 30;
         }
+
+        JButton nextButton = createNextButton();
+        nextButton.setBounds(10,yVal,120,25);
+        panel.add(nextButton);
+
+        nextButtonErrorMsg = new JLabel();
+        nextButtonErrorMsg.setBounds(140,yVal,400,25);
+        panel.add(nextButtonErrorMsg);
 
         frame.setVisible(true);
     }
@@ -61,27 +67,41 @@ public class FillInVectors {
         JTextField numVectorsTF = new JTextField(String.valueOf(vectorStr));
         numVectorsTF.setBounds(110, y, 165, 25);
         panel.add(numVectorsTF);
-        textFields.add(numVectorsTF);
+        textFieldsVectors.add(numVectorsTF);
 
-        JButton testButton = createNewButtonForVector(vectorIndex);
-        testButton.setBounds(285,y,80,25);
-        panel.add(testButton);
+        JButton button = createNewButtonForVector(vectorIndex);
+        button.setBounds(285,y,80,25);
+        panel.add(button);
 
         JLabel success = new JLabel();
-        success.setBounds(400,y,420,25);
+        success.setBounds(400,y,2000,25);
         panel.add(success);
-        successLabels.add(success);
+        vectorValuesLabel.add(success);
+    }
+
+    private JButton createNextButton(){
+        return new JButton(new AbstractAction("Next") {
+            @Override
+            public void actionPerformed(ActionEvent e ) {
+                for (boolean val : validVectors){
+                    if (!val){
+                        nextButtonErrorMsg.setText("You have not set all vectors");
+                        return;
+                    }
+                }
+                frame.dispose();
+            }
+        });
     }
 
     private JButton createNewButtonForVector(int vectorIndex){
-        return new JButton(new AbstractAction("Done") {
+        return new JButton(new AbstractAction("Set") {
             @Override
             public void actionPerformed(ActionEvent e ) {
-                //System.out.println(textFields.get(vectorIndex).getText());
-                //System.out.println(isNumeric(textFields.get(vectorIndex).getText()));
-                double[] processedVector = vectorProcessing(textFields.get(vectorIndex).getText());
+                double[] processedVector = vectorProcessing(textFieldsVectors.get(vectorIndex).getText());
                 if (processedVector == null){
-                    successLabels.get(vectorIndex).setText("ERROR");
+                    vectorValuesLabel.get(vectorIndex).setText("ERROR");
+                    validVectors[vectorIndex] = false;
                 }
                 else {
                     String labelFormattedInputVector = "[";
@@ -97,8 +117,9 @@ public class FillInVectors {
                             labelFormattedInputVector += processedVector[i];
                         }
                     }
+                    validVectors[vectorIndex] = true;
                     labelFormattedInputVector = labelFormattedInputVector.substring(0,labelFormattedInputVector.length()-1) + "]";
-                    successLabels.get(vectorIndex).setText(labelFormattedInputVector);
+                    vectorValuesLabel.get(vectorIndex).setText(labelFormattedInputVector);
                 }
             }
         });
@@ -116,9 +137,6 @@ public class FillInVectors {
         if (vectorStrSplit.length != vectorSize){
             return null;
         }
-
-        //System.out.println(vectorStrSplit[0]);
-        //System.out.println(vectorStrSplit[1]);
 
         // even = real number
         // odd = imaginary number
@@ -175,7 +193,6 @@ public class FillInVectors {
                 }
             }
         }
-
         return result;
     }
 
