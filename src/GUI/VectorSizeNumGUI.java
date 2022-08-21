@@ -80,7 +80,7 @@ public class VectorSizeNumGUI implements ActionListener{
                         success.setText("Success");
                         vectorSize = vectorSizeTmp;
                         numVectors = numVectorsTmp;
-                        FillInVectors b = new FillInVectors(numVectors, vectorSize);
+                        FillInVectors fillInVectors = new FillInVectors(numVectors, vectorSize);
                         frame.dispose();
                     }
                 }
@@ -93,12 +93,11 @@ public class VectorSizeNumGUI implements ActionListener{
             success.setText("Number of vectors must be an integer");
         }
 
-
      }
 
      public static boolean isInteger(String str){
         try {
-            int a = Integer.parseInt(str);
+            Integer.parseInt(str);
             return true;
         }
         catch (NumberFormatException e){

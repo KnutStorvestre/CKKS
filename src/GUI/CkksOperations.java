@@ -29,7 +29,7 @@ public class CkksOperations {
     //private static ArrayList<>
     //TODO use stack here :)
 
-    public CkksOperations(double[][] vectorsValues, int vectorsSize, int numVectors){
+    public CkksOperations(double[][] vectorsValues, int vectorsSize, int numVectors, Parameters parameters){
         BigInteger polynomialDegree = new BigInteger(String.valueOf(vectorsSize*2));
         int bitPrimeSize = 500;
         int millerRabinIterations = 30;

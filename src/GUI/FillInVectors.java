@@ -92,8 +92,7 @@ public class FillInVectors {
                         return;
                     }
                 }
-                //
-                CkksOperations a = new CkksOperations(vectors,vectorSize,numVectors);
+
                 frame.dispose();
             }
         });

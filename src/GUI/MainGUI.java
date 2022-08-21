@@ -10,8 +10,11 @@ public class MainGUI {
         //VectorSizeNumGUI a = new VectorSizeNumGUI();
         // returns two ints
 
-        FillInVectors b = new FillInVectors(2,2);
+        //FillInVectors b = new FillInVectors(2,2);
 
+        double[][] testVectors = new double[2][2];
+
+        ParametersInput a = new ParametersInput(2,2,testVectors);
         // encoding encryption evaluation
 
 
