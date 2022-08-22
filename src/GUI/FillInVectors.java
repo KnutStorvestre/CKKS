@@ -92,7 +92,6 @@ public class FillInVectors {
                         return;
                     }
                 }
-
                 frame.dispose();
             }
         });

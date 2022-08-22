@@ -24,4 +24,12 @@ public class PublicKey {
         return p1;
     }
 
+    @Override
+    public String toString() {
+        return "PublicKey{" +
+                "polynomialDegree=" + polynomialDegree +
+                ", polynomial0=" + p0 +
+                ", polynomial1=" + p1 +
+                '}';
+    }
 }

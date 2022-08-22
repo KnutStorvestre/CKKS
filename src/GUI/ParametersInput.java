@@ -156,7 +156,7 @@ public class ParametersInput implements ActionListener {
             MathContext mc = new MathContext(100);
             Parameters parameters = new Parameters(polynomialDegree,bigMod,smallMod,scalingFactor,primeBitSize,millerRabinIterations,mc);
             frame.dispose();
-            CkksOperations ckksOperations = new CkksOperations(vectorValues, sizeVector, totVectors, parameters);
+            CkksOperations ckksOperations = new CkksOperations(vectorValues, sizeVector, totVectors, parameters, mc);
         }
     }
 
