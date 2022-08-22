@@ -80,7 +80,7 @@ public class Complex {
             return y+"i";
         }
         // shouldn't get here (unless Inf or NaN)
-        return x+" + i*"+y;
+        return x+" + "+y+"i";
     }
 
 }

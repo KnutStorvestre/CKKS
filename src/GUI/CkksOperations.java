@@ -7,6 +7,7 @@ import keys.SecretKey;
 import modules.Complex;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.math.BigDecimal;
 import java.math.MathContext;
@@ -15,6 +16,7 @@ import java.util.ArrayList;
 public class CkksOperations {
     private static int vectorLength;
     private static int totVectors;
+    private static double[][] vectorsVals;
     private static Parameters params;
     private static MathContext mc;
     private static KeyGeneratorCKKS keyGenerator;
@@ -22,7 +24,7 @@ public class CkksOperations {
     private static PublicKey publicKey;
     private static PublicKey relinearizationKey;
     // These will not be removed under reset
-    private static ArrayList<Vector> originalVectors;
+    private static ArrayList<Vector> vectors;
     private static JFrame frame;
     private static JPanel panel;
     private static JLabel infoLabel;
@@ -39,25 +41,39 @@ public class CkksOperations {
     private static JButton showSecretKeyButton;
     private static JButton showPublicKeyButton;
     private static JButton showRelinearizationKeyButton;
+    private static JButton deleteKeysButton;
+    private static JButton deleteResultsButton;
+    private static JButton resetParametersButton;
+    private static JButton resetVectorsButton;
+    private static JLabel vectorsSign;
 
-
-    //private static ArrayList<>
-    //TODO use stack here :)
-
+    //TODO these can probably be in another class
+    public static ArrayList<JLabel>  vectorSymbols;
+    public static ArrayList<JButton> vectorDownButtons;
+    public static ArrayList<JButton> vectorUpButtons;
+    
     public CkksOperations(double[][] vectorsValues, int vectorsSize, int numVectors, Parameters parameters, MathContext mathContext){
         vectorLength = vectorsSize;
         totVectors = numVectors;
+        vectorsVals = vectorsValues;
         params = parameters;
         mc = mathContext;
 
-        originalVectors = new ArrayList<>(numVectors);
+        //TODO these can probably be in another class
+        vectorSymbols = new ArrayList<>(numVectors);
+        vectorDownButtons = new ArrayList<>(numVectors);
+        vectorUpButtons = new ArrayList<>(numVectors);
+
+        vectors = new ArrayList<>(numVectors);
 
         Vector tmpVector;
         for (int i = 0; i < numVectors; i++) {
             tmpVector = new Vector();
             tmpVector.setVector(doubleVectorValsToComplexArrayList(vectorsValues[i]));
-            originalVectors.add(tmpVector);
+            vectors.add(tmpVector);
         }
+
+        //System.out.println(vectors.get(0).getVector());
 
         frame = new JFrame();
         frame.setSize(1000, 520);
@@ -113,14 +129,168 @@ public class CkksOperations {
         genKeyButton.setBounds(5,70,150,25);
         panel.add(genKeyButton);
 
+        //TODO maybe add in the future?
+        /*
+        deleteKeysButton = createDeleteKeysButton();
+        deleteKeysButton.setBounds(5,100,150,25);
+        panel.add(deleteKeysButton);
+         */
+
+        deleteResultsButton = createDeleteResultButton();
+        deleteResultsButton.setBounds(150,100,150,25);
+        panel.add(deleteResultsButton);
+
+        resetParametersButton = createResetParametersButton();
+        resetParametersButton.setBounds(295,100,150,25);
+        panel.add(resetParametersButton);
+
+        resetVectorsButton = createResetVectorsButton();
+        resetVectorsButton.setBounds(440,100,150,25);
+        panel.add(resetVectorsButton);
+
+        vectorsSign = new JLabel("Vectors");
+        vectorsSign.setBounds(80,130,150,25);
+        vectorsSign.setFont(new Font(null,1,15));
+        panel.add(vectorsSign);
+
+        int yPos = 160;
+        for (int i = 0; i < vectors.size(); i++) {
+            addNewVectorLabelButtons(i, yPos);
+            yPos += 30;
+        }
+
         frame.setVisible(true);
+    }
+
+    // TODO this can probably be an own class
+    private void addNewVectorLabelButtons(int vectorIndex, int yPos){
+        JLabel vectorLabel = new JLabel("Vector " + vectorIndex);
+        vectorLabel.setBounds(10,yPos,100,25);
+        panel.add(vectorLabel);
+
+        JLabel vectorSymbolLabel = new JLabel("V" + vectorIndex);
+        vectorSymbolLabel.setBounds(85,yPos,100,25);
+        vectorSymbols.add(vectorSymbolLabel);
+        panel.add(vectorSymbolLabel);
+
+        JButton showVectorValuesButton = createShowVectorValuesButton(vectorIndex);
+        showVectorValuesButton.setBounds(130,yPos,60,25);
+        panel.add(showVectorValuesButton);
+
+        JButton addVectorButton = createAddVectorButton(vectorIndex);
+        addVectorButton.setBounds(190,yPos,60,25);
+        panel.add(addVectorButton);
+
+        JButton vectorDownButton = createVectorDownButton(vectorIndex);
+        vectorDownButton.setBounds(250,yPos,80,25);
+        vectorDownButtons.add(vectorDownButton);
+        panel.add(vectorDownButton);
+
+        JButton vectorUpButton = createVectorUpButton(vectorIndex);
+        vectorUpButton.setBounds(330,yPos,80,25);
+        vectorUpButtons.add(vectorUpButton);
+        panel.add(vectorUpButton);
+    }
+
+    //TODO vector down should have a bette name!
+    private JButton createVectorUpButton(int vectorIndex) {
+        return new JButton(new AbstractAction("Decrypt") {
+            int vectorIdx = vectorIndex;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO generate error message if user tries to encrypt without keys
+                if (getValue(Action.NAME).equals("Decrypt")){
+                    putValue(Action.NAME,"Decode");
+                }
+                System.out.println(vectorIdx);
+            }
+        });
+    }
+
+    //TODO vector down should have a bette name!
+    private JButton createVectorDownButton(int vectorIndex) {
+        return new JButton(new AbstractAction("Encode") {
+            int vectorIdx = vectorIndex;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO generate error message if user tries to encrypt without keys
+                putValue(Action.NAME,"Encrypt");
+                System.out.println(vectorIdx);
+            }
+        });
+    }
+
+    private JButton createAddVectorButton(int vectorIndex) {
+        return new JButton(new AbstractAction("Add") {
+            int vectorIdx = vectorIndex;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //TODO add error message if
+                // mismatch between vectors
+                // not enough operators
+                infoMsgLabel.setText("Vector added to operations");
+                System.out.println(vectorIdx);
+            }
+        });
+    }
+
+    private JButton createShowVectorValuesButton(int vectorIndex) {
+        return new JButton(new AbstractAction("Show") {
+            int vectorIdx = vectorIndex;
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                infoMsgLabel.setText("Vector printed in terminal");
+                System.out.println(vectorIdx);
+            }
+        });
+    }
+
+    private JButton createDeleteKeysButton() {
+        return new JButton(new AbstractAction("Delete keys") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                secretKey = null;
+                publicKey = null;
+                relinearizationKey = null;
+                infoMsgLabel.setText("Keys are deleted");
+            }
+        });
+    }
+
+    private JButton createResetVectorsButton() {
+        return new JButton(new AbstractAction("Reset vectors") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                VectorSizeNumGUI vectorSizeNumGUI = new VectorSizeNumGUI();
+            }
+        });
+    }
+
+    private JButton createResetParametersButton() {
+        return new JButton(new AbstractAction("Reset parameters") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                ParametersInput parametersInput = new ParametersInput(vectorLength, totVectors, vectorsVals);
+            }
+        });
+    }
+
+    private JButton createDeleteResultButton() {
+        return new JButton(new AbstractAction("Delete Results") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                infoMsgLabel.setText("Results are deleted");
+            }
+        });
     }
 
     private JButton createGenKeyButton() {
         return new JButton(new AbstractAction("Generate keys") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                infoMsgLabel.setText("Keys created");
+                infoMsgLabel.setText("Keys generated");
 
                 keyGenerator = new KeyGeneratorCKKS(params);
                 secretKey = keyGenerator.getSecretKey();
@@ -143,10 +313,6 @@ public class CkksOperations {
                 panel.repaint();
             }
         });
-    }
-
-    private void createVector(JPanel panel, int vectorIndex){
-
     }
 
     private JButton createShowSecretKeyButton() {
