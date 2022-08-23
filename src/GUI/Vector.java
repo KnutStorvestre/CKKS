@@ -13,6 +13,21 @@ public class Vector {
     private EncodedText encoded;
     private Ciphertext encrypted;
 
+    /**
+     *
+     * @param level 0 = vector, 1 = encodedText, 2 = Ciphertext
+     */
+    public void printVector(int level){
+        if (level == 0){
+            System.out.println(vector);
+        } else if (level == 1) {
+            System.out.println(encoded);
+        }
+        else {
+            System.out.println(encrypted);
+        }
+    }
+
     public void setVector(ArrayList<Complex> vector) {
         this.vector = vector;
     }

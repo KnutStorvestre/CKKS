@@ -148,13 +148,14 @@ public class ParametersInput implements ActionListener {
             success.setText("ERROR: Invalid value(s)!");
         }
         else {
-            BigInteger bigMod = new BigInteger(moduloBigTF.getText());
-            BigInteger smallMod = new BigInteger(moduloSmallTF.getText());
-            BigInteger scalingFactor = new BigInteger(scalingFactorTF.getText());
+            int bigModExp = Integer.parseInt(moduloBigTF.getText());
+            int smallModExp = Integer.parseInt(moduloSmallTF.getText());
+            int scalingFactorExp = Integer.parseInt(scalingFactorTF.getText());
             int millerRabinIterations = Integer.parseInt(millerRabinIterationsTF.getText());
             int primeBitSize = Integer.parseInt(bitPrimeSizeTF.getText());
             MathContext mc = new MathContext(100);
-            Parameters parameters = new Parameters(polynomialDegree,bigMod,smallMod,scalingFactor,primeBitSize,millerRabinIterations,mc);
+            Parameters parameters = new Parameters(polynomialDegree,BigInteger.TWO.pow(bigModExp),
+                    BigInteger.TWO.pow(smallModExp),BigInteger.TWO.pow(scalingFactorExp),primeBitSize,millerRabinIterations,mc);
             frame.dispose();
             CkksOperations ckksOperations = new CkksOperations(vectorValues, sizeVector, totVectors, parameters, mc);
         }

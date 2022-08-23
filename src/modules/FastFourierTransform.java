@@ -9,8 +9,6 @@ import java.util.ArrayList;
 
 public class FastFourierTransform {
 
-    //TODO maybe Math.PI is to short
-
     private int indices;
     private ArrayList<Complex> rootsOfUnity;
     private ArrayList<Complex> rootsOfUnityInverse;

@@ -92,6 +92,7 @@ public class FillInVectors {
                         return;
                     }
                 }
+                ParametersInput parametersInput = new ParametersInput(vectorSize,numVectors,vectors);
                 frame.dispose();
             }
         });
