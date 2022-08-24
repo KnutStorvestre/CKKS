@@ -26,8 +26,9 @@ public class Evaluation {
 
     //TODO
     //  plaintext: division
-    //  encoded text: multiplication, division
-    //  ciphertext: subtraction, division
+    //  encoded text: division
+    //  ciphertext: division
+    // cipher multiplied with encoded text
 
     public ArrayList<Complex> additionPlaintext(ArrayList<Complex> plain0, ArrayList<Complex> plain1){
         ArrayList<Complex> result = new ArrayList<>(plain0.size());
@@ -82,6 +83,13 @@ public class Evaluation {
         return new EncodedText(new Polynomial(polyDeg,resultCoefficients),scalingFactor);
     }
 
+    public EncodedText multiplyEncodedText(EncodedText encodedText0, EncodedText encodedText1){
+        Polynomial resultPoly = encodedText0.getPolynomial().multiplicationCRT(encodedText1.getPolynomial(),crt);
+        resultPoly.moduloSmall(scalingFactor);
+
+        return new EncodedText(resultPoly,scalingFactor.multiply(scalingFactor));
+    }
+
     public Ciphertext additionCiphertext(Ciphertext cipher0, Ciphertext cipher1){
         BigInteger modulo = cipher1.getModulo();
 
@@ -92,6 +100,20 @@ public class Evaluation {
 
         Polynomial p0New = c0p0.additionMod(c1p0, modulo).moduloSmall(modulo);
         Polynomial p1New = c0p1.additionMod(c1p1, modulo).moduloSmall(modulo);
+
+        return new Ciphertext(p0New, p1New, cipher1.getScaling(), modulo);
+    }
+
+    public Ciphertext subtractionCiphertext(Ciphertext cipher0, Ciphertext cipher1){
+        BigInteger modulo = cipher1.getModulo();
+
+        Polynomial c0p0 = cipher0.getPoly0();
+        Polynomial c0p1 = cipher0.getPoly1();
+        Polynomial c1p0 = cipher1.getPoly0();
+        Polynomial c1p1 = cipher1.getPoly1();
+
+        Polynomial p0New = c0p0.subtractionMod(c1p0, modulo).moduloSmall(modulo);
+        Polynomial p1New = c0p1.subtractionMod(c1p1, modulo).moduloSmall(modulo);
 
         return new Ciphertext(p0New, p1New, cipher1.getScaling(), modulo);
     }

@@ -123,6 +123,18 @@ public class Polynomial {
         return new Polynomial(polynomialDegree, sumCoefficients);
     }
 
+    public Polynomial subtractionMod(Polynomial poly, BigInteger modulo){
+        BigInteger[] sumCoefficients = new BigInteger[polynomialDegreeInt];
+        Arrays.fill(sumCoefficients, new BigInteger("0"));
+
+        BigInteger[] polyCoeffs = poly.getCoefficients();
+
+        for (int i = 0; i < polynomialDegreeInt; i++) {
+            sumCoefficients[i] = coefficients[i].subtract(polyCoeffs[i]).mod(modulo);
+        }
+        return new Polynomial(polynomialDegree, sumCoefficients);
+    }
+
     //TODO using try catch might not be necessary
     public Polynomial moduloSmall(BigInteger modulo){
         BigInteger[] modCoeffs =  new BigInteger[coefficients.length];
