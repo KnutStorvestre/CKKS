@@ -1,6 +1,7 @@
 package CKKS;
 
 import data.Ciphertext;
+import data.EncodedText;
 import keys.PublicKey;
 import modules.ChineseRemainderTheorem;
 import modules.Complex;
@@ -23,6 +24,11 @@ public class Evaluation {
         crt = params.getCrt();
     }
 
+    //TODO
+    //  plaintext: division
+    //  encoded text: multiplication, division
+    //  ciphertext: subtraction, division
+
     public ArrayList<Complex> additionPlaintext(ArrayList<Complex> plain0, ArrayList<Complex> plain1){
         ArrayList<Complex> result = new ArrayList<>(plain0.size());
 
@@ -41,6 +47,39 @@ public class Evaluation {
         }
 
         return result;
+    }
+
+    public ArrayList<Complex> multiplicationPlaintext(ArrayList<Complex> plain0, ArrayList<Complex> plain1){
+        ArrayList<Complex> result = new ArrayList<>(plain0.size());
+
+        for (int i = 0; i < plain0.size(); i++) {
+            result.add(plain0.get(i).times(plain1.get(i)));
+        }
+
+        return result;
+    }
+
+    public EncodedText additionEncodedText(EncodedText encodedText0, EncodedText encodedText1){
+        BigInteger[] encodedText0Coefficients = encodedText0.getPolynomial().getCoefficients();
+        BigInteger[] encodedText1Coefficients = encodedText1.getPolynomial().getCoefficients();
+
+        BigInteger[] resultCoefficients = new BigInteger[encodedText0Coefficients.length];
+        for (int i = 0; i < encodedText0Coefficients.length; i++) {
+            resultCoefficients[i] = encodedText0Coefficients[i].add(encodedText1Coefficients[i]);
+        }
+
+        return new EncodedText(new Polynomial(polyDeg,resultCoefficients),scalingFactor);
+    }
+
+    public EncodedText subtractionEncodedText(EncodedText encodedText0, EncodedText encodedText1){
+        BigInteger[] encodedText0Coefficients = encodedText0.getPolynomial().getCoefficients();
+        BigInteger[] encodedText1Coefficients = encodedText1.getPolynomial().getCoefficients();
+        BigInteger[] resultCoefficients = new BigInteger[encodedText0Coefficients.length];
+        for (int i = 0; i < encodedText0Coefficients.length; i++) {
+            resultCoefficients[i] = encodedText0Coefficients[i].subtract(encodedText1Coefficients[i]);
+        }
+
+        return new EncodedText(new Polynomial(polyDeg,resultCoefficients),scalingFactor);
     }
 
     public Ciphertext additionCiphertext(Ciphertext cipher0, Ciphertext cipher1){

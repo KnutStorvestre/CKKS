@@ -49,7 +49,7 @@ public class Main {
         ArrayList<Complex> values0 = new ArrayList<>();
         ArrayList<Complex> values1 = new ArrayList<>();
 
-        BigDecimal twoBD = new BigDecimal("2.2");
+        BigDecimal twoBD = new BigDecimal("2");
         BigDecimal threeBD = new BigDecimal("3");
 
         //[(2,0),(2,3),(3,0),(0,3),(2,0),(2,0),(3,0),(2,2)]
@@ -72,7 +72,6 @@ public class Main {
         values1.add(new Complex(threeBD, BigDecimal.ZERO));
         values1.add(new Complex(twoBD,twoBD));
 
-
         Encoder encoder = new Encoder(params, mc);
         EncodedText val0Encoded = encoder.encode(values0, scalingFactor);
         EncodedText val1Encoded = encoder.encode(values1, scalingFactor);
@@ -90,15 +89,22 @@ public class Main {
 
         System.out.println(values0);
         System.out.println(values1);
-        ArrayList<Complex> val0AddVal1 = evaluation.subtractionPlaintext(values0,values1);
+        ArrayList<Complex> val0AddVal1 = evaluation.multiplicationPlaintext(values0,values1);
+        // ArrayList<Complex> val0AddVal1 = evaluation.di;
+
+        System.out.println(val0Encoded);
+        System.out.println(val1Encoded);
+        EncodedText a = evaluation.additionEncodedText(val0Encoded,val1Encoded);
+        ArrayList<Complex> aDecoded = encoder.decode(a);
 
         // Super temporary
         // TODO implement it in gui that you can choose precision of result
         ArrayList<Complex> val0Val1DecodedRounded = new ArrayList<>();
-        MathContext m = new MathContext(20);
+        MathContext m = new MathContext(2);
         for (int i = 0; i < val0Val1Decoded.size(); i++) {
-            val0Val1DecodedRounded.add(new Complex(val0AddVal1.get(i).real().round(m), val0AddVal1.get(i).imag().round(m)));
+            val0Val1DecodedRounded.add(new Complex(aDecoded.get(i).real().round(m), aDecoded.get(i).imag().round(m)));
         }
+        //[4.8400000000102378363 - 1.9120108007382472227E-12i, 4.8399999999782648704 + 6.5999999999516917752i, 9.0000000000287107034 - 2.7699349525023601149E-11i, -6.5999999999909436812 + 6.5999999999890232488i, 4.8399999999988511127 + 1.0576313537326018433E-11i, 4.8400000000013308178 + 6.6000000000409852753i, 9.0000000000898044078 - 1.4418420864109633241E-11i, -6.5999999998924296149 + 6.6000000000662016292i]
         System.out.println(val0Val1DecodedRounded);
     }
 
