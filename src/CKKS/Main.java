@@ -49,7 +49,7 @@ public class Main {
         ArrayList<Complex> values0 = new ArrayList<>();
         ArrayList<Complex> values1 = new ArrayList<>();
 
-        BigDecimal twoBD = new BigDecimal("2");
+        BigDecimal twoBD = new BigDecimal("2.2");
         BigDecimal threeBD = new BigDecimal("3");
 
         //[(2,0),(2,3),(3,0),(0,3),(2,0),(2,0),(3,0),(2,2)]
@@ -82,18 +82,22 @@ public class Main {
         Ciphertext val1Cipher = encryper.encrypt(val1Encoded);
 
         Evaluation evaluation = new Evaluation(params);
-        Ciphertext val0Val1 = evaluation.multiply(val0Cipher, val1Cipher, relinearizationKey);
+        Ciphertext val0Val1 = evaluation.multiplyCiphertext(val0Cipher, val1Cipher, relinearizationKey);
 
         Decryptor decryptor = new Decryptor(params, secretKey);
         EncodedText val0Val1Encoded = decryptor.decrypt(val0Val1);
         ArrayList<Complex> val0Val1Decoded = encoder.decode(val0Val1Encoded);
+
+        System.out.println(values0);
+        System.out.println(values1);
+        ArrayList<Complex> val0AddVal1 = evaluation.subtractionPlaintext(values0,values1);
 
         // Super temporary
         // TODO implement it in gui that you can choose precision of result
         ArrayList<Complex> val0Val1DecodedRounded = new ArrayList<>();
         MathContext m = new MathContext(20);
         for (int i = 0; i < val0Val1Decoded.size(); i++) {
-            val0Val1DecodedRounded.add(new Complex(val0Val1Decoded.get(i).real().round(m), val0Val1Decoded.get(i).imag().round(m)));
+            val0Val1DecodedRounded.add(new Complex(val0AddVal1.get(i).real().round(m), val0AddVal1.get(i).imag().round(m)));
         }
         System.out.println(val0Val1DecodedRounded);
     }

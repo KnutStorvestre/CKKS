@@ -112,33 +112,35 @@ public class CkksOperations {
         currentOperations.setBounds(130,40,200,25);
         panel.add(currentOperations);
 
+        /*
         nextResult = 0;
         currentResult = new JLabel("=R0");
         currentResult.setBounds(330,40,30,25);
         panel.add(currentResult);
+         */
 
         additionButton = createAdditionButton();
-        additionButton.setBounds(360,40,30,25);
+        additionButton.setBounds(330,40,30,25);
         panel.add(additionButton);
 
         minusButton = createMinusButton();
-        minusButton.setBounds(390,40,30,25);
+        minusButton.setBounds(360,40,30,25);
         panel.add(minusButton);
 
         multiplicationButton = createMultiplicationButton();
-        multiplicationButton.setBounds(420,40,30,25);
+        multiplicationButton.setBounds(390,40,30,25);
         panel.add(multiplicationButton);
 
         divisionButton = createDivisionButton();
-        divisionButton.setBounds(450,40,30,25);
+        divisionButton.setBounds(420,40,30,25);
         panel.add(divisionButton);
 
         evaluationButton = createEvaluationButton();
-        evaluationButton.setBounds(480,40,100,25);
+        evaluationButton.setBounds(450,40,100,25);
         panel.add(evaluationButton);
 
         resetOperationsButton = createResetOperationsButton();
-        resetOperationsButton.setBounds(580,40,150,25);
+        resetOperationsButton.setBounds(540,40,150,25);
         panel.add(resetOperationsButton);
 
         genKeyButton = createGenKeyButton();
@@ -463,6 +465,13 @@ public class CkksOperations {
     }
 
     //TODO maybe create class for all buttons
+    // TODO
+    //  addition plain encoded cipher
+    //  multiplication plain encoded cipher
+    //  substraction plain encoded cipher
+    //  division plain encoded cipher
+    // TODO
+    //  vector should be saved to results
     private JButton createEvaluationButton() {
         return new JButton(new AbstractAction("Evaluate") {
             @Override

@@ -3,9 +3,11 @@ package CKKS;
 import data.Ciphertext;
 import keys.PublicKey;
 import modules.ChineseRemainderTheorem;
+import modules.Complex;
 import modules.Polynomial;
 
 import java.math.BigInteger;
+import java.util.ArrayList;
 
 public class Evaluation {
 
@@ -21,7 +23,27 @@ public class Evaluation {
         crt = params.getCrt();
     }
 
-    public Ciphertext addition(Ciphertext cipher0, Ciphertext cipher1){
+    public ArrayList<Complex> additionPlaintext(ArrayList<Complex> plain0, ArrayList<Complex> plain1){
+        ArrayList<Complex> result = new ArrayList<>(plain0.size());
+
+        for (int i = 0; i < plain0.size(); i++) {
+            result.add(plain0.get(i).plus(plain1.get(i)));
+        }
+
+        return result;
+    }
+
+    public ArrayList<Complex> subtractionPlaintext(ArrayList<Complex> plain0, ArrayList<Complex> plain1){
+        ArrayList<Complex> result = new ArrayList<>(plain0.size());
+
+        for (int i = 0; i < plain0.size(); i++) {
+            result.add(plain0.get(i).minus(plain1.get(i)));
+        }
+
+        return result;
+    }
+
+    public Ciphertext additionCiphertext(Ciphertext cipher0, Ciphertext cipher1){
         BigInteger modulo = cipher1.getModulo();
 
         Polynomial c0p0 = cipher0.getPoly0();
@@ -35,7 +57,7 @@ public class Evaluation {
         return new Ciphertext(p0New, p1New, cipher1.getScaling(), modulo);
     }
 
-    public Ciphertext multiply(Ciphertext cipher0, Ciphertext cipher1, PublicKey relinearizationKey){
+    public Ciphertext multiplyCiphertext(Ciphertext cipher0, Ciphertext cipher1, PublicKey relinearizationKey){
         BigInteger smallMod = cipher0.getModulo();
 
         Polynomial c0p0 = cipher0.getPoly0();
