@@ -33,11 +33,12 @@ public class CkksOperations {
     private static JLabel instructions ;
     private static JTextField currentOperations;
     private static JLabel currentResult;
-    private static JButton addButton;
+    private static JButton additionButton;
     private static JButton minusButton;
     private static JButton multiplicationButton;
     private static JButton divisionButton;
     private static JButton evaluationButton;
+    private static JButton resetOperationsButton;
     private static JButton genKeyButton;
     private static JButton showSecretKeyButton;
     private static JButton showPublicKeyButton;
@@ -116,9 +117,9 @@ public class CkksOperations {
         currentResult.setBounds(330,40,30,25);
         panel.add(currentResult);
 
-        addButton = createAdditionButton();
-        addButton.setBounds(360,40,30,25);
-        panel.add(addButton);
+        additionButton = createAdditionButton();
+        additionButton.setBounds(360,40,30,25);
+        panel.add(additionButton);
 
         minusButton = createMinusButton();
         minusButton.setBounds(390,40,30,25);
@@ -133,8 +134,12 @@ public class CkksOperations {
         panel.add(divisionButton);
 
         evaluationButton = createEvaluationButton();
-        evaluationButton.setBounds(500,40,100,25);
+        evaluationButton.setBounds(480,40,100,25);
         panel.add(evaluationButton);
+
+        resetOperationsButton = createResetOperationsButton();
+        resetOperationsButton.setBounds(580,40,150,25);
+        panel.add(resetOperationsButton);
 
         genKeyButton = createGenKeyButton();
         genKeyButton.setBounds(5,70,150,25);
@@ -161,13 +166,15 @@ public class CkksOperations {
 
         vectorsSign = new JLabel("Vectors");
         vectorsSign.setBounds(80,130,150,25);
-        vectorsSign.setFont(new Font(null,1,15));
+        vectorsSign.setFont(new Font(null,Font.BOLD,15));
         panel.add(vectorsSign);
 
         resultsSign = new JLabel("Results");
         resultsSign.setBounds(500,130,150,25);
-        resultsSign.setFont(new Font(null,1,15));
+        resultsSign.setFont(new Font(null,Font.BOLD,15));
         panel.add(resultsSign);
+
+        //addNewResultLabelButtons();
 
         int yPos = 160;
         for (int i = 0; i < vectors.size(); i++) {
@@ -180,33 +187,34 @@ public class CkksOperations {
 
 
     // TODO this can probably be an own class
-    private void addNewResultLabelButtons(int resultIndex, int yPos){
-        JLabel vectorLabel = new JLabel("Vector " + resultIndex);
+    private void addNewResultLabelButtons(int vectorIndex, int yPos){
+        JLabel vectorLabel = new JLabel("Result " + vectorIndex);
         vectorLabel.setBounds(10,yPos,100,25);
         panel.add(vectorLabel);
 
-        JLabel vectorSymbolLabel = new JLabel("E" + resultIndex);
+        JLabel vectorSymbolLabel = new JLabel("R" + vectorIndex);
         vectorSymbolLabel.setBounds(85,yPos,100,25);
         vectorSymbols.add(vectorSymbolLabel);
         panel.add(vectorSymbolLabel);
 
-        JButton showVectorValuesButton = createShowVectorValuesButton(resultIndex);
+        JButton showVectorValuesButton = createShowVectorValuesButton(vectorIndex);
         showVectorValuesButton.setBounds(130,yPos,60,25);
         panel.add(showVectorValuesButton);
 
-        JButton addVectorButton = createAddVectorButton(resultIndex);
+        JButton addVectorButton = createAddVectorButton(vectorIndex);
         addVectorButton.setBounds(190,yPos,60,25);
         panel.add(addVectorButton);
 
-        JButton vectorDownButton = createVectorLevelUpButton(resultIndex);
-        vectorDownButton.setBounds(250,yPos,80,25);
-        vectorUpButtons.add(vectorDownButton);
-        panel.add(vectorDownButton);
-
-        JButton vectorUpButton = createVectorLevelDownButton(resultIndex);
-        vectorUpButton.setBounds(330,yPos,80,25);
-        vectorDownButtons.add(vectorUpButton);
+        JButton vectorUpButton = createVectorLevelUpButton(vectorIndex);
+        vectorUpButton.setBounds(250,yPos,80,25);
+        vectorUpButtons.add(vectorUpButton);
         panel.add(vectorUpButton);
+
+        JButton vectorDownButton = createVectorLevelDownButton(vectorIndex);
+        vectorDownButton.setBounds(330,yPos,80,25);
+        vectorDownButton.setVisible(false);
+        vectorDownButtons.add(vectorDownButton);
+        panel.add(vectorDownButton);
     }
 
     // TODO this can probably be an own class
@@ -255,6 +263,7 @@ public class CkksOperations {
                     }
                     levels[vectorIdx] = 1;
                     infoMsgLabel.setText("Encoded");
+                    vectorSymbols.get(vectorIndex).setText("E"+vectorIndex);
                     vectorUpButtons.get(vectorIndex).setText("Encrypt");
                     vectorDownButtons.get(vectorIdx).setVisible(true);
                     vectorDownButtons.get(vectorIdx).setText("Decode");
@@ -269,6 +278,7 @@ public class CkksOperations {
                             tmpVector.setEncrypted(encryption.encrypt(tmpVector.getEncoded()));
                         }
                         levels[vectorIdx] = 2;
+                        vectorSymbols.get(vectorIndex).setText("C"+vectorIndex);
                         vectorUpButtons.get(vectorIdx).setVisible(false);
                         vectorDownButtons.get(vectorIdx).setText("Decrypt");
                         infoMsgLabel.setText("Encrypted");
@@ -292,6 +302,7 @@ public class CkksOperations {
                 if (levels[vectorIndex] == 2){
                     infoMsgLabel.setText("Decrypted");
                     levels[vectorIndex] = 1;
+                    vectorSymbols.get(vectorIndex).setText("E"+vectorIndex);
                     vectorDownButtons.get(vectorIdx).setText("Decode");
                     vectorUpButtons.get(vectorIdx).setText("Encrypt");
                     vectorUpButtons.get(vectorIdx).setVisible(true);
@@ -299,6 +310,7 @@ public class CkksOperations {
                 else {
                     infoMsgLabel.setText("Decoded");
                     levels[vectorIndex] = 0;
+                    vectorSymbols.get(vectorIndex).setText("V"+vectorIndex);
                     vectorDownButtons.get(vectorIdx).setVisible(false);
                     vectorUpButtons.get(vectorIdx).setText("Encode");
                 }
@@ -310,13 +322,17 @@ public class CkksOperations {
     private JButton createAddVectorButton(int vectorIndex) {
         return new JButton(new AbstractAction("Add") {
             int vectorIdx = vectorIndex;
+
+            //TODO add erase button for currentOperations text field
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO add error message if
                 // mismatch between vectors
                 // not enough operators
-                infoMsgLabel.setText("Vector added to operations");
+
+                // TODO the logic here is weird
                 System.out.println(vectorIdx);
+                addToCurrentOperations(vectorSymbols.get(vectorIdx).getText(), true);
             }
         });
     }
@@ -436,6 +452,16 @@ public class CkksOperations {
         });
     }
 
+    private JButton createResetOperationsButton() {
+        return new JButton(new AbstractAction("Reset operations") {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Pressed");
+                currentOperations.setText("");
+            }
+        });
+    }
+
     //TODO maybe create class for all buttons
     private JButton createEvaluationButton() {
         return new JButton(new AbstractAction("Evaluate") {
@@ -451,6 +477,7 @@ public class CkksOperations {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Pressed");
+                addToCurrentOperations("/", false);
             }
         });
     }
@@ -460,6 +487,7 @@ public class CkksOperations {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Pressed");
+                addToCurrentOperations("x", false);
             }
         });
     }
@@ -469,6 +497,7 @@ public class CkksOperations {
             @Override
             public void actionPerformed(ActionEvent e) {
                 System.out.println("Pressed");
+                addToCurrentOperations("-", false);
             }
         });
     }
@@ -478,8 +507,49 @@ public class CkksOperations {
             @Override
             public void actionPerformed(ActionEvent e ) {
                 System.out.println("Pressed");
+                addToCurrentOperations("+", false);
             }
         });
+    }
+
+    // TODO the parameter should have a better name
+    private void addToCurrentOperations(String val, boolean isVector){
+        //TODO use regular expression
+        String curOpStr = currentOperations.getText();
+        int curOpLen = curOpStr.length();
+        if (curOpLen == 5){
+            infoMsgLabel.setText("Can only preform operations on two vectors");
+        }
+        else {
+            if (isVector) {
+                if (curOpLen == 0) {
+                    currentOperations.setText(val);
+                    infoMsgLabel.setText("Vector added to operations");
+                } else if (curOpLen == 3) {
+                    if (curOpStr.contains("V") && !val.contains("V")){
+                        infoMsgLabel.setText("Both vectors must be plaintext!");
+                    } else if (curOpStr.contains("E") && !val.contains("E")) {
+                        infoMsgLabel.setText("Both vectors must be Encoded!");
+                    } else if (curOpStr.contains("C") && !val.contains("C")) {
+                        infoMsgLabel.setText("Both vectors must be encrypted!");
+                    } else {
+                        infoMsgLabel.setText("Vector added to operations");
+                        currentOperations.setText(curOpStr + val);
+                    }
+                } else {
+                    infoMsgLabel.setText("Please select operator before adding new vector!");
+                }
+            }
+            else {
+                if (curOpLen == 2) {
+                    currentOperations.setText(curOpStr + val);
+                    infoMsgLabel.setText("Operator added to operations");
+                }
+                else {
+                    infoMsgLabel.setText("Please add new vector before adding operator");
+                }
+            }
+        }
     }
 
     private ArrayList<Complex> doubleVectorValsToComplexArrayList(double[] vector){
