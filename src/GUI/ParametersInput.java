@@ -122,7 +122,6 @@ public class ParametersInput implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Pressed Done");
         boolean allValid = true;
         if (!isNumeric(bitPrimeSizeTF.getText())){
             bitPrimeSizeTF.setText("ERROR");

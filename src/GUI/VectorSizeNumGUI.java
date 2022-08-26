@@ -61,7 +61,6 @@ public class VectorSizeNumGUI implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         String numVectorsStr = numVectorsTF.getText();
         String vectorSizeStr = vectorSizeTF.getText();
-        System.out.println(numVectorsStr + ", " + vectorSizeStr);
 
         if (isInteger(numVectorsStr)){
             int numVectorsTmp = Integer.parseInt(numVectorsStr);

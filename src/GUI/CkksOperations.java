@@ -451,7 +451,6 @@ public class CkksOperations {
                     Vector vectorPos0 = vectors.get(Character.getNumericValue(curOpStr.charAt(1)));
                     Vector vectorPos1 = vectors.get(Character.getNumericValue(curOpStr.charAt(4)));
                     Vector resultVector = new Vector();
-
                     if (curOpStr.contains("+")){
                         if (curOpStr.contains("V")){
                             levels.add(0);
@@ -474,22 +473,25 @@ public class CkksOperations {
                             levels.add(2);
                             resultVector.setEncrypted(evaluation.subtractionCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted()));
                         }
-                    } else if (curOpStr.contains("*")) {
-                        if (curOpStr.contains("V")){
-                            resultVector.setVector(evaluation.multiplicationPlaintext(vectorPos0.getVector(), vectorPos1.getVector()));
+                    } else {
+                        if (curOpStr.contains("V")) {
                             levels.add(0);
+                            resultVector.setVector(evaluation.multiplicationPlaintext(vectorPos0.getVector(), vectorPos1.getVector()));
                         } else if (curOpStr.contains("E")) {
-                            resultVector.setEncoded(evaluation.multiplyEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
                             levels.add(1);
+                            resultVector.setEncoded(evaluation.multiplyEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
                         } else {
-                            resultVector.setEncrypted(evaluation.multiplyCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted(),relinearizationKey));
                             levels.add(2);
+                            resultVector.setEncrypted(evaluation.multiplyCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted(), relinearizationKey));
                         }
+                    }
+                        /*
                     } else {
                         infoMsgLabel.setText("Division is not implemented yet!");
                     }
-                    CreateNewVectorLabelButtons(nextVectorIndex,xPosResultVectors,yPosResultVectors+=30);
+                         */
                     vectors.add(resultVector);
+                    CreateNewVectorLabelButtons(nextVectorIndex,xPosResultVectors,yPosResultVectors+=30);
 
                     System.out.println(currentOperations.getText() + "=");
                     vectors.get(nextVectorIndex).printVector(levels.get(nextVectorIndex));
