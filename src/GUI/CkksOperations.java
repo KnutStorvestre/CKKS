@@ -46,7 +46,7 @@ public class CkksOperations {
 
     //TODO these can probably be in another class
     private static int xPosInputVectors = 10;
-    private static int xPosResultVectors = 500;
+    private static int xPosResultVectors = 450;
     private static int yPosInputVectors = 130;
     private static int yPosResultVectors = 130;
     private static ArrayList<JLabel>  vectorSymbols;
@@ -199,15 +199,24 @@ public class CkksOperations {
 
         JButton vectorUpButton = createVectorLevelUpButton(vectorIndex);
         vectorUpButton.setBounds(xPos += 60, yPos, 80, 25);
+        if (levelVec == 1){
+            vectorUpButton.setText("Encrypt");
+        } else if (levelVec == 2) {
+            vectorUpButton.setVisible(false);
+        }
         vectorUpButtons.add(vectorUpButton);
         panel.add(vectorUpButton);
 
         JButton vectorDownButton = createVectorLevelDownButton(vectorIndex);
         vectorDownButton.setBounds(xPos + 80, yPos, 80, 25);
-        vectorDownButton.setVisible(false);
+        if (levelVec == 0){
+            vectorDownButton.setVisible(false);
+        } else if (levelVec == 1) {
+            vectorDownButton.setText("Decode");
+        } else {
+            vectorDownButton.setText("Decrypt");
+        }
         vectorDownButtons.add(vectorDownButton);
-
-
         panel.add(vectorDownButton);
     }
 
@@ -260,7 +269,12 @@ public class CkksOperations {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO generate error message if user tries to encrypt without keys
+                Vector tmpVector;
                 if (levels.get(vectorIndex) == 2){
+                    tmpVector = vectors.get(vectorIdx);
+                    if (tmpVector.getEncoded() == null){
+                        tmpVector.setEncoded(decryptor.decrypt(tmpVector.getEncrypted()));
+                    }
                     infoMsgLabel.setText("Decrypted");
                     levels.set(vectorIndex,1);
                     vectorSymbols.get(vectorIndex).setText("E"+vectorIndex);
@@ -269,6 +283,10 @@ public class CkksOperations {
                     vectorUpButtons.get(vectorIdx).setVisible(true);
                 }
                 else {
+                    tmpVector = vectors.get(vectorIdx);
+                    if (tmpVector.getVector() == null){
+                        tmpVector.setVector(encoder.decode(tmpVector.getEncoded()));
+                    }
                     infoMsgLabel.setText("Decoded");
                     levels.set(vectorIndex,0);
                     vectorSymbols.get(vectorIndex).setText("V"+vectorIndex);
@@ -302,6 +320,7 @@ public class CkksOperations {
             @Override
             public void actionPerformed(ActionEvent e) {
                 infoMsgLabel.setText("Vector printed in terminal");
+                System.out.println(vectorSymbols.get(vectorIndex).getText()+"=");
                 vectors.get(vectorIdx).printVector(levels.get(vectorIndex));
             }
         });
