@@ -16,11 +16,11 @@ public class CkksOperations {
     private static int vectorLength;
     private static int numStartVectors;
     private static double[][] vectorsVals;
-    private static int[] levels;
-    // private static ArrayList<Integer> levels;
+    //private static int[] levels;
+    private static ArrayList<Integer> levels;
+    private static int nextVectorIndex;
     private static Parameters params;
     private static MathContext mc;
-    private static int nextResult;
     private static KeyGeneratorCKKS keyGenerator;
     private static SecretKey secretKey;
     private static PublicKey publicKey;
@@ -45,6 +45,10 @@ public class CkksOperations {
     private static Evaluation evaluation;
 
     //TODO these can probably be in another class
+    private static int xPosInputVectors = 10;
+    private static int xPosResultVectors = 500;
+    private static int yPosInputVectors = 130;
+    private static int yPosResultVectors = 130;
     private static ArrayList<JLabel>  vectorSymbols;
     private static ArrayList<JButton> vectorUpButtons;
     private static ArrayList<JButton> vectorDownButtons;
@@ -55,10 +59,15 @@ public class CkksOperations {
         vectorsVals = vectorsValues;
         params = parameters;
         mc = mathContext;
+        nextVectorIndex = numVectors;
 
         vectors = new ArrayList<>(numVectors);
         // 0 = vector 1 = encoded 2 = encrypted
-        levels = new int[numVectors];
+        // levels = new int[numVectors];
+        levels = new ArrayList<>();
+        for (int i = 0; i < numStartVectors; i++) {
+            levels.add(0);
+        }
 
         //TODO these can probably be in another class
         vectorSymbols = new ArrayList<>(numVectors);
@@ -169,18 +178,15 @@ public class CkksOperations {
 
         //addNewResultLabelButtons();
 
-        int yPos = 160;
-        int xPos = 10;
         for (int i = 0; i < vectors.size(); i++) {
-            addNewVectorLabelButtons(i, xPos, yPos);
-            yPos += 30;
+            CreateNewVectorLabelButtons(i, xPosInputVectors, yPosInputVectors+=30);
         }
 
         frame.setVisible(true);
     }
 
     // TODO this can probably be an own class
-    private void addNewVectorLabelButtons(int vectorIndex, int xPos, int yPos){
+    private void CreateNewVectorLabelButtons(int vectorIndex, int xPos, int yPos){
         JLabel vectorLabel = new JLabel("Vector " + vectorIndex);
         vectorLabel.setBounds(xPos,yPos,100,25);
         panel.add(vectorLabel);
@@ -218,12 +224,12 @@ public class CkksOperations {
             public void actionPerformed(ActionEvent e) {
                 //TODO generate error message if user tries to encrypt without keys
                 Vector tmpVector;
-                if (levels[vectorIndex] == 0){
+                if (levels.get(vectorIndex) == 0){
                     tmpVector = vectors.get(vectorIdx);
                     if (tmpVector.getEncoded() == null){
                         tmpVector.setEncoded(encoder.encode(tmpVector.getVector(), params.getScalingFactor()));
                     }
-                    levels[vectorIdx] = 1;
+                    levels.set(vectorIndex,1);
                     infoMsgLabel.setText("Encoded");
                     vectorSymbols.get(vectorIndex).setText("E"+vectorIndex);
                     vectorUpButtons.get(vectorIndex).setText("Encrypt");
@@ -239,7 +245,7 @@ public class CkksOperations {
                         if (tmpVector.getEncrypted() == null) {
                             tmpVector.setEncrypted(encryption.encrypt(tmpVector.getEncoded()));
                         }
-                        levels[vectorIdx] = 2;
+                        levels.set(vectorIndex,2);
                         vectorSymbols.get(vectorIndex).setText("C"+vectorIndex);
                         vectorUpButtons.get(vectorIdx).setVisible(false);
                         vectorDownButtons.get(vectorIdx).setText("Decrypt");
@@ -260,10 +266,9 @@ public class CkksOperations {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //TODO generate error message if user tries to encrypt without keys
-                System.out.println(levels[vectorIndex]);
-                if (levels[vectorIndex] == 2){
+                if (levels.get(vectorIndex) == 2){
                     infoMsgLabel.setText("Decrypted");
-                    levels[vectorIndex] = 1;
+                    levels.set(vectorIndex,1);
                     vectorSymbols.get(vectorIndex).setText("E"+vectorIndex);
                     vectorDownButtons.get(vectorIdx).setText("Decode");
                     vectorUpButtons.get(vectorIdx).setText("Encrypt");
@@ -271,7 +276,7 @@ public class CkksOperations {
                 }
                 else {
                     infoMsgLabel.setText("Decoded");
-                    levels[vectorIndex] = 0;
+                    levels.set(vectorIndex,0);
                     vectorSymbols.get(vectorIndex).setText("V"+vectorIndex);
                     vectorDownButtons.get(vectorIdx).setVisible(false);
                     vectorUpButtons.get(vectorIdx).setText("Encode");
@@ -305,8 +310,10 @@ public class CkksOperations {
             @Override
             public void actionPerformed(ActionEvent e) {
                 infoMsgLabel.setText("Vector printed in terminal");
-                vectors.get(vectorIdx).printVector(levels[vectorIndex]);
                 System.out.println(vectorIdx);
+                System.out.println(vectors.size());
+                System.out.println(levels.size());
+                vectors.get(vectorIdx).printVector(levels.get(vectorIndex));
             }
         });
     }
@@ -418,7 +425,6 @@ public class CkksOperations {
         return new JButton(new AbstractAction("Reset operations") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Pressed");
                 currentOperations.setText("");
             }
         });
@@ -446,43 +452,55 @@ public class CkksOperations {
                     Vector vectorPos0 = vectors.get(Character.getNumericValue(curOpStr.charAt(1)));
                     Vector vectorPos1 = vectors.get(Character.getNumericValue(curOpStr.charAt(4)));
                     Vector resultVector = new Vector();
-                    vectors.add(resultVector);
                     if (curOpStr.contains("+")){
                         if (curOpStr.contains("V")){
+                            levels.add(0);
                             System.out.println(evaluation.additionPlaintext(vectorPos0.getVector(), vectorPos1.getVector()));
                             resultVector.setVector(evaluation.additionPlaintext(vectorPos0.getVector(), vectorPos1.getVector()));
                         } else if (curOpStr.contains("E")) {
+                            levels.add(1);
                             System.out.println(evaluation.additionEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
                             resultVector.setEncoded(evaluation.additionEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
                         } else {
+                            levels.add(2);
                             System.out.println(evaluation.multiplyCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted(),relinearizationKey));
                             resultVector.setEncrypted(evaluation.multiplyCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted(),relinearizationKey));
                         }
                     } else if (curOpStr.contains("-")) {
                         if (curOpStr.contains("V")){
+                            levels.add(0);
                             System.out.println(evaluation.subtractionPlaintext(vectorPos0.getVector(), vectorPos1.getVector()));
                             resultVector.setVector(evaluation.subtractionPlaintext(vectorPos0.getVector(), vectorPos1.getVector()));
                         } else if (curOpStr.contains("E")) {
+                            levels.add(1);
                             System.out.println(evaluation.subtractionEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
                             resultVector.setEncoded(evaluation.subtractionEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
                         } else {
+                            levels.add(2);
                             System.out.println(evaluation.subtractionCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted()));
                             resultVector.setEncrypted(evaluation.subtractionCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted()));
                         }
                     } else if (curOpStr.contains("*")) {
                         if (curOpStr.contains("V")){
                             resultVector.setVector(evaluation.multiplicationPlaintext(vectorPos0.getVector(), vectorPos1.getVector()));
+                            levels.add(0);
                         } else if (curOpStr.contains("E")) {
                             resultVector.setEncoded(evaluation.multiplyEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
+                            levels.add(1);
                         } else {
                             resultVector.setEncrypted(evaluation.multiplyCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted(),relinearizationKey));
+                            levels.add(2);
                         }
                     } else {
                         infoMsgLabel.setText("Division is not implemented yet!");
                     }
+                    CreateNewVectorLabelButtons(nextVectorIndex,xPosResultVectors,yPosResultVectors+=30);
+                    //System.out.println(resultVector.getVector());
+                    vectors.add(resultVector);
                     infoMsgLabel.setText("Vector added to result");
+                    frame.repaint();
+                    nextVectorIndex++;
                 }
-                System.out.println("Pressed");
             }
         });
     }
@@ -491,7 +509,6 @@ public class CkksOperations {
         return new JButton(new AbstractAction("/") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Pressed");
                 addToCurrentOperations("/", false);
             }
         });
@@ -501,7 +518,6 @@ public class CkksOperations {
         return new JButton(new AbstractAction("x") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Pressed");
                 addToCurrentOperations("x", false);
             }
         });
@@ -511,7 +527,6 @@ public class CkksOperations {
         return new JButton(new AbstractAction("-") {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Pressed");
                 addToCurrentOperations("-", false);
             }
         });
@@ -521,7 +536,6 @@ public class CkksOperations {
         return new JButton(new AbstractAction("+") {
             @Override
             public void actionPerformed(ActionEvent e ) {
-                System.out.println("Pressed");
                 addToCurrentOperations("+", false);
             }
         });
