@@ -80,6 +80,9 @@ public class CkksOperations {
             vectors.add(tmpVector);
         }
 
+        //System.out.println(vectors.get(0).getVector());
+        //System.out.println(vectors.get(1).getVector());
+
         encoder = new Encoder(params, mc);
         evaluation = new Evaluation(params);
 
@@ -458,7 +461,7 @@ public class CkksOperations {
                             resultVector.setEncoded(evaluation.additionEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
                         } else {
                             levels.add(2);
-                            resultVector.setEncrypted(evaluation.multiplyCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted(),relinearizationKey));
+                            resultVector.setEncrypted(evaluation.additionCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted()));
                         }
                     } else if (curOpStr.contains("-")) {
                         if (curOpStr.contains("V")){

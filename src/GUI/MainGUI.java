@@ -13,10 +13,10 @@ public class MainGUI {
         //FillInVectors b = new FillInVectors(2,2);
 
         double[][] testVectors = new double[2][4];
-        testVectors[0][0] = 2;
-        testVectors[0][1] = 5;
-        testVectors[1][0] = 7;
-        testVectors[1][1] = 99;
+        testVectors[0][0] = 1;
+        testVectors[0][1] = 1;
+        testVectors[1][0] = 1;
+        testVectors[1][1] = 1;
 
         ParametersInput a = new ParametersInput(2,2,testVectors);
         // encoding encryption evaluation
