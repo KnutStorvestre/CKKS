@@ -14,9 +14,10 @@ import java.util.ArrayList;
 
 public class CkksOperations {
     private static int vectorLength;
-    private static int totVectors;
+    private static int numStartVectors;
     private static double[][] vectorsVals;
     private static int[] levels;
+    // private static ArrayList<Integer> levels;
     private static Parameters params;
     private static MathContext mc;
     private static int nextResult;
@@ -28,25 +29,12 @@ public class CkksOperations {
     private static ArrayList<Vector> vectors;
     private static JFrame frame;
     private static JPanel panel;
-    private static JLabel infoLabel;
-    private static JLabel infoMsgLabel;
-    private static JLabel instructions ;
+    private static JLabel infoLabel, infoMsgLabel, instructions;
     private static JTextField currentOperations;
-    private static JLabel currentResult;
-    private static JButton additionButton;
-    private static JButton minusButton;
-    private static JButton multiplicationButton;
-    private static JButton divisionButton;
-    private static JButton evaluationButton;
-    private static JButton resetOperationsButton;
-    private static JButton genKeyButton;
-    private static JButton showSecretKeyButton;
-    private static JButton showPublicKeyButton;
-    private static JButton showRelinearizationKeyButton;
-    private static JButton deleteKeysButton;
-    private static JButton deleteResultsButton;
-    private static JButton resetParametersButton;
-    private static JButton resetVectorsButton;
+    private static JButton additionButton, minusButton, multiplicationButton,divisionButton;
+    private static JButton evaluationButton, resetOperationsButton;
+    private static JButton genKeyButton, showSecretKeyButton, showPublicKeyButton, showRelinearizationKeyButton, deleteKeysButton;
+    private static JButton deleteResultsButton, resetParametersButton,resetVectorsButton;
     private static JLabel vectorsSign;
     private static JLabel resultsSign;
 
@@ -63,7 +51,7 @@ public class CkksOperations {
 
     public CkksOperations(double[][] vectorsValues, int vectorsSize, int numVectors, Parameters parameters, MathContext mathContext){
         vectorLength = vectorsSize;
-        totVectors = numVectors;
+        numStartVectors = numVectors;
         vectorsVals = vectorsValues;
         params = parameters;
         mc = mathContext;
@@ -131,9 +119,12 @@ public class CkksOperations {
         multiplicationButton.setBounds(390,40,30,25);
         panel.add(multiplicationButton);
 
+        // TODO maybe add in the future?
+        /*
         divisionButton = createDivisionButton();
         divisionButton.setBounds(420,40,30,25);
         panel.add(divisionButton);
+         */
 
         evaluationButton = createEvaluationButton();
         evaluationButton.setBounds(450,40,100,25);
@@ -179,72 +170,41 @@ public class CkksOperations {
         //addNewResultLabelButtons();
 
         int yPos = 160;
+        int xPos = 10;
         for (int i = 0; i < vectors.size(); i++) {
-            addNewVectorLabelButtons(i, yPos);
+            addNewVectorLabelButtons(i, xPos, yPos);
             yPos += 30;
         }
 
         frame.setVisible(true);
     }
 
-
     // TODO this can probably be an own class
-    private void addNewResultLabelButtons(int vectorIndex, int yPos){
-        JLabel vectorLabel = new JLabel("Result " + vectorIndex);
-        vectorLabel.setBounds(10,yPos,100,25);
-        panel.add(vectorLabel);
-
-        JLabel vectorSymbolLabel = new JLabel("R" + vectorIndex);
-        vectorSymbolLabel.setBounds(85,yPos,100,25);
-        vectorSymbols.add(vectorSymbolLabel);
-        panel.add(vectorSymbolLabel);
-
-        JButton showVectorValuesButton = createShowVectorValuesButton(vectorIndex);
-        showVectorValuesButton.setBounds(130,yPos,60,25);
-        panel.add(showVectorValuesButton);
-
-        JButton addVectorButton = createAddVectorButton(vectorIndex);
-        addVectorButton.setBounds(190,yPos,60,25);
-        panel.add(addVectorButton);
-
-        JButton vectorUpButton = createVectorLevelUpButton(vectorIndex);
-        vectorUpButton.setBounds(250,yPos,80,25);
-        vectorUpButtons.add(vectorUpButton);
-        panel.add(vectorUpButton);
-
-        JButton vectorDownButton = createVectorLevelDownButton(vectorIndex);
-        vectorDownButton.setBounds(330,yPos,80,25);
-        vectorDownButton.setVisible(false);
-        vectorDownButtons.add(vectorDownButton);
-        panel.add(vectorDownButton);
-    }
-
-    // TODO this can probably be an own class
-    private void addNewVectorLabelButtons(int vectorIndex, int yPos){
+    private void addNewVectorLabelButtons(int vectorIndex, int xPos, int yPos){
         JLabel vectorLabel = new JLabel("Vector " + vectorIndex);
-        vectorLabel.setBounds(10,yPos,100,25);
+        vectorLabel.setBounds(xPos,yPos,100,25);
         panel.add(vectorLabel);
 
         JLabel vectorSymbolLabel = new JLabel("V" + vectorIndex);
-        vectorSymbolLabel.setBounds(85,yPos,100,25);
+        vectorSymbolLabel.setBounds(xPos+=75,yPos,100,25);
         vectorSymbols.add(vectorSymbolLabel);
         panel.add(vectorSymbolLabel);
 
         JButton showVectorValuesButton = createShowVectorValuesButton(vectorIndex);
-        showVectorValuesButton.setBounds(130,yPos,60,25);
+        showVectorValuesButton.setBounds(xPos+=55,yPos,60,25);
         panel.add(showVectorValuesButton);
 
         JButton addVectorButton = createAddVectorButton(vectorIndex);
-        addVectorButton.setBounds(190,yPos,60,25);
+        addVectorButton.setBounds(xPos+=60,yPos,60,25);
         panel.add(addVectorButton);
 
         JButton vectorUpButton = createVectorLevelUpButton(vectorIndex);
-        vectorUpButton.setBounds(250,yPos,80,25);
+        vectorUpButton.setBounds(xPos+=60,yPos,80,25);
         vectorUpButtons.add(vectorUpButton);
         panel.add(vectorUpButton);
 
         JButton vectorDownButton = createVectorLevelDownButton(vectorIndex);
-        vectorDownButton.setBounds(330,yPos,80,25);
+        vectorDownButton.setBounds(xPos+=80,yPos,80,25);
         vectorDownButton.setVisible(false);
         vectorDownButtons.add(vectorDownButton);
         panel.add(vectorDownButton);
@@ -378,7 +338,7 @@ public class CkksOperations {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                ParametersInput parametersInput = new ParametersInput(vectorLength, totVectors, vectorsVals);
+                ParametersInput parametersInput = new ParametersInput(vectorLength, numStartVectors, vectorsVals);
             }
         });
     }
@@ -476,6 +436,52 @@ public class CkksOperations {
         return new JButton(new AbstractAction("Evaluate") {
             @Override
             public void actionPerformed(ActionEvent e) {
+                String curOpStr = currentOperations.getText();
+                int curOpLen = curOpStr.length();
+                if (curOpLen != 5){
+                    infoMsgLabel.setText("Please add 2 vectors and 1 operator!");
+                }
+                else {
+                    // TODO this logic can be done better!!
+                    Vector vectorPos0 = vectors.get(Character.getNumericValue(curOpStr.charAt(1)));
+                    Vector vectorPos1 = vectors.get(Character.getNumericValue(curOpStr.charAt(4)));
+                    Vector resultVector = new Vector();
+                    vectors.add(resultVector);
+                    if (curOpStr.contains("+")){
+                        if (curOpStr.contains("V")){
+                            System.out.println(evaluation.additionPlaintext(vectorPos0.getVector(), vectorPos1.getVector()));
+                            resultVector.setVector(evaluation.additionPlaintext(vectorPos0.getVector(), vectorPos1.getVector()));
+                        } else if (curOpStr.contains("E")) {
+                            System.out.println(evaluation.additionEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
+                            resultVector.setEncoded(evaluation.additionEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
+                        } else {
+                            System.out.println(evaluation.multiplyCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted(),relinearizationKey));
+                            resultVector.setEncrypted(evaluation.multiplyCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted(),relinearizationKey));
+                        }
+                    } else if (curOpStr.contains("-")) {
+                        if (curOpStr.contains("V")){
+                            System.out.println(evaluation.subtractionPlaintext(vectorPos0.getVector(), vectorPos1.getVector()));
+                            resultVector.setVector(evaluation.subtractionPlaintext(vectorPos0.getVector(), vectorPos1.getVector()));
+                        } else if (curOpStr.contains("E")) {
+                            System.out.println(evaluation.subtractionEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
+                            resultVector.setEncoded(evaluation.subtractionEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
+                        } else {
+                            System.out.println(evaluation.subtractionCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted()));
+                            resultVector.setEncrypted(evaluation.subtractionCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted()));
+                        }
+                    } else if (curOpStr.contains("*")) {
+                        if (curOpStr.contains("V")){
+                            resultVector.setVector(evaluation.multiplicationPlaintext(vectorPos0.getVector(), vectorPos1.getVector()));
+                        } else if (curOpStr.contains("E")) {
+                            resultVector.setEncoded(evaluation.multiplyEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
+                        } else {
+                            resultVector.setEncrypted(evaluation.multiplyCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted(),relinearizationKey));
+                        }
+                    } else {
+                        infoMsgLabel.setText("Division is not implemented yet!");
+                    }
+                    infoMsgLabel.setText("Vector added to result");
+                }
                 System.out.println("Pressed");
             }
         });
