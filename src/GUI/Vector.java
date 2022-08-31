@@ -51,4 +51,5 @@ public class Vector {
     public Ciphertext getEncrypted() {
         return encrypted;
     }
+
 }

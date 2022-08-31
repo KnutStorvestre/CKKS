@@ -159,4 +159,5 @@ public class ChineseRemainderTheorem {
     public ArrayList<NumberTheoreticalTransform> getNtts() {
         return ntts;
     }
+
 }

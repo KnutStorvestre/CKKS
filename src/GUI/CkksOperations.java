@@ -80,9 +80,6 @@ public class CkksOperations {
             vectors.add(tmpVector);
         }
 
-        //System.out.println(vectors.get(0).getVector());
-        //System.out.println(vectors.get(1).getVector());
-
         encoder = new Encoder(params, mc);
         evaluation = new Evaluation(params);
 
@@ -142,9 +139,11 @@ public class CkksOperations {
         genKeyButton.setBounds(5,70,150,25);
         panel.add(genKeyButton);
 
+        /*
         deleteResultsButton = createDeleteResultButton();
         deleteResultsButton.setBounds(150,100,150,25);
         panel.add(deleteResultsButton);
+         */
 
         resetParametersButton = createResetParametersButton();
         resetParametersButton.setBounds(295,100,150,25);

@@ -6,6 +6,7 @@ import modules.NumberTheory;
 import modules.Polynomial;
 
 import java.math.BigInteger;
+import java.util.Arrays;
 
 public class KeyGeneratorCKKS {
 
@@ -92,4 +93,5 @@ public class KeyGeneratorCKKS {
     public PublicKey getRelinearizationKey() {
         return relinearizationKey;
     }
+
 }

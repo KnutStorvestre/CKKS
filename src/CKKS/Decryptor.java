@@ -33,4 +33,5 @@ public class Decryptor {
 
         return new EncodedText(encodedPolynomial, cipher.getScaling());
     }
+
 }

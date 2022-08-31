@@ -56,4 +56,5 @@ public class Encryption {
 
         return new Ciphertext(cipherPolynomial0, cipherPolynomial1, encodedText.getScalingFactor(), smallMod);
     }
+
 }

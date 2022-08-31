@@ -56,5 +56,4 @@ public class Parameters {
         return polynomialDegree;
     }
 
-
 }

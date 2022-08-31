@@ -17,7 +17,6 @@ public class FastFourierTransform {
     private final static BigDecimal PI = new BigDecimal("3.141592653589793");
     private MathContext mc;
 
-    //Dette kan jeg skrive mye om i masteren
     public FastFourierTransform(int numIndices, MathContext mathContext){
         indices = numIndices;
         rootsOfUnity = new ArrayList<>(numIndices);
@@ -29,8 +28,6 @@ public class FastFourierTransform {
         for (int i = 0; i < numIndices; i++) {
             //angle = 2*Math.PI * i / numIndices;
             angle = (((new BigDecimal("2")).multiply(PI)).multiply(new BigDecimal(i))).divide(new BigDecimal(numIndices),mc);
-            // TODO maybe instead of big integer its smarter to use bigdecimal
-            // BigDecimalMath.cos(angle, mc);
             BigDecimal negativeOneBD = new BigDecimal("-1");
             rootsOfUnity.add(i, new Complex(BigDecimalMath.cos(angle, mc), BigDecimalMath.sin(angle, mc)));
             rootsOfUnityInverse.add(i, new Complex(BigDecimalMath.cos(angle.multiply(negativeOneBD), mc),
@@ -96,16 +93,6 @@ public class FastFourierTransform {
                 }
             }
         }
-
-        //System.out.println(valuesReversed);
-
-        //System.out.println(rootsOfUnity);
-        /*
-        System.out.println(rootsOfUnity.size());
-        for (int i = 0; i < rootsOfUnity.size(); i++) {
-            System.out.println(rootsOfUnity.get(i));
-        }
-         */
         return valuesReversed;
     }
 
@@ -113,8 +100,6 @@ public class FastFourierTransform {
         //TODO the parameters should tested and if the parameters are incorrect the user should receive a message
         int totCoefficients = values.size();
 
-        // TODO copy is probably good
-        // This method should probably be added into the complex class. But this will also create problems
         ArrayList<Complex> valuesDeepCopy = new ArrayList<>(totCoefficients);
         for (int i = 0; i < totCoefficients; i++) {
             valuesDeepCopy.add(i,new Complex(values.get(i).real(),values.get(i).imag()));
@@ -155,7 +140,6 @@ public class FastFourierTransform {
             scalingDownCoefficients.add(new Complex(BigDecimal.ZERO,BigDecimal.ZERO));
         }
 
-
         for (int i = 0; i < valuesDeepCopy.size(); i++) {
             int idxDeepCopy = reversedBits(i,(int) (Math.log(totCoefficients) / Math.log(2)));
             scalingDownCoefficients.set(i,  valuesDeepCopy.get(idxDeepCopy));
@@ -178,7 +162,6 @@ public class FastFourierTransform {
         String binVal = Integer.toBinaryString(value);
         String zerosBitLength = new String(new char[numBits-binVal.length()]).replace('\0', '0');
         String binValLength = zerosBitLength+binVal;
-        //TODO String builder might be slow!
         String binValReversed = new StringBuilder(binValLength).reverse().toString();
         return Integer.parseInt(binValReversed,2);
     }
