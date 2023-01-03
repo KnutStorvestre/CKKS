@@ -91,7 +91,6 @@ public class VectorSizeNumGUI implements ActionListener{
         else {
             success.setText("Number of vectors must be an integer");
         }
-
      }
 
      public static boolean isInteger(String str){

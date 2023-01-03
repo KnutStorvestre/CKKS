@@ -1,0 +1,16 @@
+classDiagram
+direction BT
+class Main {
+  + Main() 
+  + main(String[]) void
+}
+class PublicKey {
+  + PublicKey(BigInteger, Polynomial, Polynomial) 
+  - Polynomial p1
+  - Polynomial p0
+  - BigInteger polynomialDegree
+  + getP0() Polynomial
+  + getP1() Polynomial
+  + toString() String
+}
+

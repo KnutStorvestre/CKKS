@@ -28,7 +28,6 @@ public class Parameters {
         millerRabinIterations = millerRabinIterationsNum;
         mathContext = mc;
 
-        // TODO explain why I am using these values to calculate total primes that I am going to use!
         BigDecimal bigModLog2 = BigDecimalMath.log2(new BigDecimal(bigModulo), mathContext);
         BigDecimal polyDegLog2 = BigDecimalMath.log2(new BigDecimal(polynomialDegree), mc);
         int totPrimes = (new BigDecimal("2")).add(polyDegLog2).add((new BigDecimal("4").multiply(bigModLog2)).divide(new BigDecimal(primeBitSize), mc)).intValue();

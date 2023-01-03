@@ -42,22 +42,6 @@ public class Complex {
         return BigDecimal.ZERO;
     }
 
-
-    /**
-     Modulus of this Complex number
-     (the distance from the origin in polar coordinates).
-     @return |z| where z is this Complex number.
-     */
-    /*
-    public double mod() {
-        if (x!=0 || y!=0) {
-            return Math.sqrt(x*x+y*y);
-        } else {
-            return 0d;
-        }
-    }
-    */
-
     public Complex plus(Complex o){
         return new Complex(x.add(o.real()), y.add(o.imag()));
     }

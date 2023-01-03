@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Diagram>
+  <ID>JAVA</ID>
+  <OriginalElement>keys.PublicKey</OriginalElement>
+  <nodes>
+    <node x="-230.33333333333331" y="29.5">Main</node>
+    <node x="439.5563948608366" y="-677.6940508648147">keys.PublicKey</node>
+  </nodes>
+  <notes />
+  <edges />
+  <settings layout="Hierarchic" zoom="0.3661325571373786" showDependencies="false" x="1013.2213816284421" y="23.80017126909752" />
+  <SelectedNodes />
+  <Categories>
+    <Category>Constructors</Category>
+    <Category>Fields</Category>
+    <Category>Methods</Category>
+  </Categories>
+  <SCOPE>All</SCOPE>
+  <VISIBILITY>private</VISIBILITY>
+</Diagram>
+

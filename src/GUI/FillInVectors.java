@@ -151,7 +151,6 @@ public class FillInVectors {
         double[] complexNumSplit;
         for (int i = 0; i < vectorStrSplit.length; i++) {
             complexNumSplit = processRealAndImag(vectorStrSplit[i]);
-            //System.out.println(Arrays.toString(complexNumSplit));
             if (complexNumSplit == null)
                 return null;
             complexNumbers[2*i] = complexNumSplit[0];
@@ -175,8 +174,6 @@ public class FillInVectors {
         double[] result = new double[2];
         String imgNum;
         for (int i = 0; i < operands.length; i++) {
-            // if imaginary or real
-            //System.out.println(operands[i]);
             if (operands[i].contains("i")){
                 imgNum = operands[i].replace("i","");
                 if (!isNumeric(imgNum)) {

@@ -21,18 +21,13 @@ public class KeyGeneratorCKKS {
         parameters = params;
         numTheory = new NumberTheory();
 
-        // TODO implement this!!
-        // TODO implement secret key generator
         secretKey = secretKeyGenerator();
         publicKey = publicKeyGenerator();
         relinearizationKey = relinearizationKeyGenerator();
     }
 
     private SecretKey secretKeyGenerator(){
-        // TODO explain what hamming-weight is and why we divide by 4
         int hammingWeight = parameters.getPolynomialDegree().divide(new BigInteger("4")).intValue();
-        //System.out.println(parameters.getPolynomialDegree());
-        //System.out.println(hammingWeight);
         BigInteger[] secretKeyCoefficients = numTheory.hammingWeight(parameters.getPolynomialDegree().intValue(), hammingWeight);
         return new SecretKey(parameters.getPolynomialDegree(), new Polynomial(parameters.getPolynomialDegree(), secretKeyCoefficients));
     }

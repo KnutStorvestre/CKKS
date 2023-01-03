@@ -20,14 +20,12 @@ public class Encoder {
 
     public Encoder(Parameters params, MathContext mathContext){
         polyDegree = params.getPolynomialDegree();
-        // TODO this should be changed int value of big integer is not necessary
         mc = mathContext;
         fft = new FastFourierTransform(polyDegree.multiply(BigInteger.TWO).intValue(), mc);
     }
 
     public EncodedText encode(ArrayList<Complex> values, BigInteger scaling){
         int totVals = values.size();
-
         int totEncodedVals = totVals<<1;
 
         ArrayList<Complex> embeddingInverseValues = fft.embeddingInverse(values);
@@ -44,7 +42,6 @@ public class Encoder {
         // Merges list of real and imaginary numbers
         BigInteger[] message = Stream.concat(Arrays.stream(msgReal), Arrays.stream(msgImag))
                 .toArray(BigInteger[]::new);
-
 
         return new EncodedText(new Polynomial(BigInteger.valueOf(message.length), message),scaling);
     }

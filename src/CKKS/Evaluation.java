@@ -24,12 +24,6 @@ public class Evaluation {
         crt = params.getCrt();
     }
 
-    //TODO
-    //  plaintext: division
-    //  encoded text: division
-    //  ciphertext: division
-    // cipher multiplied with encoded text
-
     public ArrayList<Complex> additionPlaintext(ArrayList<Complex> plain0, ArrayList<Complex> plain1){
         ArrayList<Complex> result = new ArrayList<>(plain0.size());
 

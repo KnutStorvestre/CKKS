@@ -10,8 +10,6 @@ import java.math.BigInteger;
 
 public class Decryptor {
 
-    //TODO if encoder is in the same class as encoder this should maybe be a part of the same class as the encryption
-
     private BigInteger polyDeg;
     private ChineseRemainderTheorem crt;
     private SecretKey secretKey;

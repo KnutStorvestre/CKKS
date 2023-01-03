@@ -19,8 +19,6 @@ public class Encryption {
     private SecretKey secretKey;
     private NumberTheory numTheory;
     private ChineseRemainderTheorem crtParameters;
-    //This is here so I don't have to create a new instace of numberTheory for each polynomial
-    //private NumberTheory numTheory;
 
     public Encryption(Parameters params, PublicKey pubKey, SecretKey secKey){
         polynomialDegree = params.getPolynomialDegree();
@@ -40,13 +38,9 @@ public class Encryption {
         BigInteger[] randomDiscreteTriangleList1 = numTheory.randomTriangle(polynomialDegree.intValue());
         BigInteger[] randomDiscreteTriangleList2 = numTheory.randomTriangle(polynomialDegree.intValue());
 
-
         Polynomial randomPoly = new Polynomial(polynomialDegree, randomDiscreteTriangleList0);
         Polynomial errorPoly0 = new Polynomial(polynomialDegree, randomDiscreteTriangleList1);
         Polynomial errorPoly1 = new Polynomial(polynomialDegree, randomDiscreteTriangleList2);
-
-        System.out.println(crtParameters.getPrimes()[0]);
-
 
         Polynomial cipherPolynomial0 = pubKey0.multiplicationCRT(randomPoly, crtParameters);
         System.out.println(randomPoly);

@@ -408,14 +408,6 @@ public class CkksOperations {
         });
     }
 
-    //TODO maybe create class for all buttons
-    // TODO
-    //  addition plain encoded cipher
-    //  multiplication plain encoded cipher
-    //  substraction plain encoded cipher
-    //  division plain encoded cipher
-    // TODO
-    //  vector should be saved to results
     private JButton createEvaluationButton() {
         return new JButton(new AbstractAction("Evaluate") {
             @Override
@@ -464,11 +456,7 @@ public class CkksOperations {
                             resultVector.setEncrypted(evaluation.multiplyCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted(), relinearizationKey));
                         }
                     }
-                        /*
-                    } else {
-                        infoMsgLabel.setText("Division is not implemented yet!");
-                    }
-                         */
+
                     vectors.add(resultVector);
                     CreateNewVectorLabelButtons(nextVectorIndex,xPosResultVectors,yPosResultVectors+=30);
 
@@ -522,7 +510,6 @@ public class CkksOperations {
 
     // TODO the parameter should have a better name
     private void addToCurrentOperations(String val, boolean isVector){
-        //TODO use regular expression
         String curOpStr = currentOperations.getText();
         int curOpLen = curOpStr.length();
         if (curOpLen == 5){
