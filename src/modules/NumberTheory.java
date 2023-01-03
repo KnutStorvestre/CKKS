@@ -106,7 +106,6 @@ public class NumberTheory {
     // TODO test
     // Returns list of random values exclusive maxVal
     public BigInteger[] getRandomPosVals(BigInteger maxVal, int numVals){
-
         BigInteger[] ranVals = new BigInteger[numVals];
 
         int len = maxVal.bitLength();

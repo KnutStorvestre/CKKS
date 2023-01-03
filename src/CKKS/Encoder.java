@@ -30,7 +30,6 @@ public class Encoder {
 
         int totEncodedVals = totVals<<1;
 
-        // TODO test embedding inverse
         ArrayList<Complex> embeddingInverseValues = fft.embeddingInverse(values);
 
         BigInteger[] msgReal = new BigInteger[totEncodedVals/2];
@@ -42,7 +41,7 @@ public class Encoder {
             msgImag[i] = embeddingInverseValues.get(i).imag().multiply(scalingBD).add(half).toBigInteger();
         }
 
-        //TODO this uses a lot of external libraries. This might effect performance
+        // Merges list of real and imaginary numbers
         BigInteger[] message = Stream.concat(Arrays.stream(msgReal), Arrays.stream(msgImag))
                 .toArray(BigInteger[]::new);
 

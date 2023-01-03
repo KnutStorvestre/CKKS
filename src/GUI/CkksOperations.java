@@ -16,7 +16,6 @@ public class CkksOperations {
     private static int vectorLength;
     private static int numStartVectors;
     private static double[][] vectorsVals;
-    //private static int[] levels;
     private static ArrayList<Integer> levels;
     private static int nextVectorIndex;
     private static Parameters params;
@@ -25,7 +24,6 @@ public class CkksOperations {
     private static SecretKey secretKey;
     private static PublicKey publicKey;
     private static PublicKey relinearizationKey;
-    // These will not be removed under reset
     private static ArrayList<Vector> vectors;
     private static JFrame frame;
     private static JPanel panel;
@@ -38,13 +36,10 @@ public class CkksOperations {
     private static JLabel vectorsSign;
     private static JLabel resultsSign;
 
-    //TODO logic and GUI should be kept separate
     private static Encoder encoder;
     private static Encryption encryption;
     private static Decryptor decryptor;
     private static Evaluation evaluation;
-
-    //TODO these can probably be in another class
     private static int xPosInputVectors = 10;
     private static int xPosResultVectors = 450;
     private static int yPosInputVectors = 130;
@@ -68,7 +63,6 @@ public class CkksOperations {
             levels.add(0);
         }
 
-        //TODO these can probably be in another class
         vectorSymbols = new ArrayList<>(numVectors);
         vectorUpButtons = new ArrayList<>(numVectors);
         vectorDownButtons = new ArrayList<>(numVectors);
@@ -120,13 +114,6 @@ public class CkksOperations {
         multiplicationButton.setBounds(390,40,30,25);
         panel.add(multiplicationButton);
 
-        // TODO maybe add in the future?
-        /*
-        divisionButton = createDivisionButton();
-        divisionButton.setBounds(420,40,30,25);
-        panel.add(divisionButton);
-         */
-
         evaluationButton = createEvaluationButton();
         evaluationButton.setBounds(450,40,100,25);
         panel.add(evaluationButton);
@@ -138,12 +125,6 @@ public class CkksOperations {
         genKeyButton = createGenKeyButton();
         genKeyButton.setBounds(5,70,150,25);
         panel.add(genKeyButton);
-
-        /*
-        deleteResultsButton = createDeleteResultButton();
-        deleteResultsButton.setBounds(150,100,150,25);
-        panel.add(deleteResultsButton);
-         */
 
         resetParametersButton = createResetParametersButton();
         resetParametersButton.setBounds(295,100,150,25);
@@ -170,7 +151,6 @@ public class CkksOperations {
         frame.setVisible(true);
     }
 
-    // TODO this can probably be an own class
     private void CreateNewVectorLabelButtons(int vectorIndex, int xPos, int yPos){
         String vectorSymbolStr;
         int levelVec = levels.get(vectorIndex);

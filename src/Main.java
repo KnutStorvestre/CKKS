@@ -1,5 +1,4 @@
-package CKKS;
-
+import CKKS.*;
 import data.Ciphertext;
 import data.EncodedText;
 import keys.PublicKey;
@@ -81,11 +80,15 @@ public class Main {
         Ciphertext val1Cipher = encryper.encrypt(val1Encoded);
 
         Evaluation evaluation = new Evaluation(params);
-        Ciphertext val0Val1 = evaluation.multiplyCiphertext(val0Cipher, val1Cipher, relinearizationKey);
+        //Ciphertext val0Val1 = evaluation.multiplyCiphertext(val0Cipher, val1Cipher, relinearizationKey);
+        Ciphertext val0Val1 = evaluation.additionCiphertext(val0Cipher, val1Cipher);
 
         Decryptor decryptor = new Decryptor(params, secretKey);
+        //System.out.println(val0Val1);
         EncodedText val0Val1Encoded = decryptor.decrypt(val0Val1);
         ArrayList<Complex> val0Val1Decoded = encoder.decode(val0Val1Encoded);
+
+
 
         //System.out.println(values0);
         //System.out.println(values1);
@@ -104,6 +107,7 @@ public class Main {
 
         ArrayList<Complex> bDecoded = evaluation.multiplicationPlaintext(values0,values1);
 
+
         // Super temporary
         // TODO implement it in gui that you can choose precision of result
         ArrayList<Complex> val0Val1DecodedRoundedA = new ArrayList<>();
@@ -113,6 +117,9 @@ public class Main {
             val0Val1DecodedRoundedA.add(new Complex(aDecoded.get(i).real().round(m), aDecoded.get(i).imag().round(m)));
             val0Val1DecodedRoundedB.add(new Complex(bDecoded.get(i).real().round(m), bDecoded.get(i).imag().round(m)));
         }
+
+        System.out.println(secretKey);
+
 
         // TODO maybe I should call it message instead of plaintext?
         //[4.8400000000102378363 - 1.9120108007382472227E-12i, 4.8399999999782648704 + 6.5999999999516917752i, 9.0000000000287107034 - 2.7699349525023601149E-11i, -6.5999999999909436812 + 6.5999999999890232488i, 4.8399999999988511127 + 1.0576313537326018433E-11i, 4.8400000000013308178 + 6.6000000000409852753i, 9.0000000000898044078 - 1.4418420864109633241E-11i, -6.5999999998924296149 + 6.6000000000662016292i]

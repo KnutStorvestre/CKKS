@@ -45,7 +45,12 @@ public class Encryption {
         Polynomial errorPoly0 = new Polynomial(polynomialDegree, randomDiscreteTriangleList1);
         Polynomial errorPoly1 = new Polynomial(polynomialDegree, randomDiscreteTriangleList2);
 
+        System.out.println(crtParameters.getPrimes()[0]);
+
+
         Polynomial cipherPolynomial0 = pubKey0.multiplicationCRT(randomPoly, crtParameters);
+        System.out.println(randomPoly);
+        System.out.println(cipherPolynomial0);
         cipherPolynomial0 = errorPoly0.additionMod(cipherPolynomial0,smallMod);
         cipherPolynomial0 = cipherPolynomial0.additionMod(encodedText.getPolynomial(), smallMod);
         cipherPolynomial0 = cipherPolynomial0.moduloSmall(smallMod);

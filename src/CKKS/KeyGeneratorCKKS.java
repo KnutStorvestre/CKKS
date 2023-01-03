@@ -31,6 +31,8 @@ public class KeyGeneratorCKKS {
     private SecretKey secretKeyGenerator(){
         // TODO explain what hamming-weight is and why we divide by 4
         int hammingWeight = parameters.getPolynomialDegree().divide(new BigInteger("4")).intValue();
+        //System.out.println(parameters.getPolynomialDegree());
+        //System.out.println(hammingWeight);
         BigInteger[] secretKeyCoefficients = numTheory.hammingWeight(parameters.getPolynomialDegree().intValue(), hammingWeight);
         return new SecretKey(parameters.getPolynomialDegree(), new Polynomial(parameters.getPolynomialDegree(), secretKeyCoefficients));
     }
@@ -38,6 +40,7 @@ public class KeyGeneratorCKKS {
     private PublicKey publicKeyGenerator(){
         BigInteger bigModulo = parameters.getBigModulo();
         BigInteger[] randomVals = numTheory.getRandomPosVals(bigModulo, parameters.getPolynomialDegree().intValue());
+
         BigInteger[] randomError = numTheory.randomTriangle(parameters.getPolynomialDegree().intValue());
 
         Polynomial publicKeyPolynomial1 = new Polynomial(parameters.getPolynomialDegree(), randomVals);
