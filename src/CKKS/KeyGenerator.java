@@ -6,9 +6,8 @@ import modules.NumberTheory;
 import modules.Polynomial;
 
 import java.math.BigInteger;
-import java.util.Arrays;
 
-public class KeyGeneratorCKKS {
+public class KeyGenerator {
 
     private Parameters parameters;
     private SecretKey secretKey;
@@ -17,7 +16,7 @@ public class KeyGeneratorCKKS {
     private NumberTheory numTheory;
 
 
-    public KeyGeneratorCKKS(Parameters params){
+    public KeyGenerator(Parameters params){
         parameters = params;
         numTheory = new NumberTheory();
 
@@ -29,6 +28,7 @@ public class KeyGeneratorCKKS {
     private SecretKey secretKeyGenerator(){
         int hammingWeight = parameters.getPolynomialDegree().divide(new BigInteger("4")).intValue();
         BigInteger[] secretKeyCoefficients = numTheory.hammingWeight(parameters.getPolynomialDegree().intValue(), hammingWeight);
+
         return new SecretKey(parameters.getPolynomialDegree(), new Polynomial(parameters.getPolynomialDegree(), secretKeyCoefficients));
     }
 
@@ -60,7 +60,6 @@ public class KeyGeneratorCKKS {
 
         BigInteger[] switchingKeyCoefficients = numTheory.getRandomPosVals(bigModSquared, parameters.getPolynomialDegree().intValue());
         BigInteger[] switchingKeyErrorCoefficients = numTheory.randomTriangle(parameters.getPolynomialDegree().intValue());
-
 
         Polynomial switchingKeyPolynomial = new Polynomial(parameters.getPolynomialDegree(), switchingKeyCoefficients);
 

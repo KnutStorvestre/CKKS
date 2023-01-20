@@ -30,7 +30,6 @@ public class Complex {
         return y;
     }
 
-    // TODO not tested
     public Complex times(Complex o){
         return new Complex(x.multiply(o.real()).subtract(y.multiply(o.imag())),x.multiply(o.imag()).add(y.multiply(o.real())));
     }

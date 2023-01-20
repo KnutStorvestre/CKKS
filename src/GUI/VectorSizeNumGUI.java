@@ -56,7 +56,6 @@ public class VectorSizeNumGUI implements ActionListener{
         frame.setVisible(true);
     }
 
-    //TODO how to add action listner
     @Override
     public void actionPerformed(ActionEvent e) {
         String numVectorsStr = numVectorsTF.getText();

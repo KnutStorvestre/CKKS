@@ -53,15 +53,12 @@ public class Polynomial {
         ArrayList<NumberTheoreticalTransform> ntts = crt.getNtts();
 
         Polynomial product;
-        // TODO length of products
         ArrayList<Polynomial> products = new ArrayList<>();
         for (int i = 0; i < crtPrimesNum; i++) {
             product = this.multiplicationNTTCRT(poly, crtPrimes[i], ntts.get(i));
             products.add(product);
         }
 
-        // TODO will be faster if used array instead of arraylist
-        // TODO values should have a better name
         ArrayList<BigInteger> values;
         BigInteger[] reconstructedValues = new BigInteger[polynomialDegreeInt];
         for (int i = 0; i < polynomialDegreeInt; i++) {
@@ -87,8 +84,6 @@ public class Polynomial {
         BigInteger[] fttInverse = ntt.fermatTheoreticalTransformInverse(product);
 
         return new Polynomial(polynomialDegree, fttInverse);
-
-        //Fermants theoretical transform
     }
 
     public Polynomial scalarModMultiplication(BigInteger scalar, BigInteger modulo){
@@ -135,7 +130,6 @@ public class Polynomial {
         return new Polynomial(polynomialDegree, sumCoefficients);
     }
 
-    //TODO using try catch might not be necessary
     public Polynomial moduloSmall(BigInteger modulo){
         BigInteger[] modCoeffs =  new BigInteger[coefficients.length];
         BigInteger tmpVal;

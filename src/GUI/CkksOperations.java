@@ -20,7 +20,7 @@ public class CkksOperations {
     private static int nextVectorIndex;
     private static Parameters params;
     private static MathContext mc;
-    private static KeyGeneratorCKKS keyGenerator;
+    private static KeyGenerator keyGenerator;
     private static SecretKey secretKey;
     private static PublicKey publicKey;
     private static PublicKey relinearizationKey;
@@ -202,13 +202,11 @@ public class CkksOperations {
         panel.add(vectorDownButton);
     }
 
-    //TODO vector down should have a bette name!
     private JButton createVectorLevelUpButton(int vectorIndex) {
         return new JButton(new AbstractAction("Encode") {
             int vectorIdx = vectorIndex;
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO generate error message if user tries to encrypt without keys
                 Vector tmpVector;
                 if (levels.get(vectorIndex) == 0){
                     tmpVector = vectors.get(vectorIdx);
@@ -242,7 +240,6 @@ public class CkksOperations {
         });
     }
 
-    //TODO vector up should have a bette name!
     private JButton createVectorLevelDownButton(int vectorIndex) {
         return new JButton(new AbstractAction("Decode") {
             int vectorIdx = vectorIndex;
@@ -250,7 +247,6 @@ public class CkksOperations {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO generate error message if user tries to encrypt without keys
                 Vector tmpVector;
                 if (levels.get(vectorIndex) == 2){
                     tmpVector = vectors.get(vectorIdx);
@@ -283,14 +279,8 @@ public class CkksOperations {
         return new JButton(new AbstractAction("Add") {
             int vectorIdx = vectorIndex;
 
-            //TODO add erase button for currentOperations text field
             @Override
             public void actionPerformed(ActionEvent e) {
-                //TODO add error message if
-                // mismatch between vectors
-                // not enough operators
-
-                // TODO the logic here is weird
                 addToCurrentOperations(vectorSymbols.get(vectorIdx).getText(), true);
             }
         });
@@ -343,7 +333,7 @@ public class CkksOperations {
             public void actionPerformed(ActionEvent e) {
                 infoMsgLabel.setText("Keys generated");
 
-                keyGenerator = new KeyGeneratorCKKS(params);
+                keyGenerator = new KeyGenerator(params);
                 secretKey = keyGenerator.getSecretKey();
                 publicKey = keyGenerator.getPublicKey();
                 relinearizationKey = keyGenerator.getRelinearizationKey();
@@ -418,7 +408,6 @@ public class CkksOperations {
                     infoMsgLabel.setText("Please add 2 vectors and 1 operator!");
                 }
                 else {
-                    // TODO this logic can be done better!!
                     Vector vectorPos0 = vectors.get(Character.getNumericValue(curOpStr.charAt(1)));
                     Vector vectorPos1 = vectors.get(Character.getNumericValue(curOpStr.charAt(4)));
                     Vector resultVector = new Vector();

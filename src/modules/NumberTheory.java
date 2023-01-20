@@ -14,7 +14,6 @@ public class NumberTheory {
     // https://en.wikipedia.org/wiki/Modular_multiplicative_inverse
     // ax == 1 (mod m),
     public BigInteger moduloInverse(BigInteger val, BigInteger primeMod){
-        // TODO explain what this is
         return val.modPow(primeMod.subtract(BigInteger.TWO), primeMod);
     }
 
@@ -58,7 +57,6 @@ public class NumberTheory {
         return rootOfUnity;
     }
 
-    //TODO I can probably explain what hamming weight is
     public BigInteger[] hammingWeight(int totVals, int hammingWeight){
         BigInteger[] hammingVals = new BigInteger[totVals];
         int currentWeight = 0;
@@ -85,7 +83,6 @@ public class NumberTheory {
         return hammingVals;
     }
 
-    // TODO explain why I use random triangle instead of uniform distribution
     public BigInteger[] randomTriangle(int numVals){
         BigInteger[] ranVals = new BigInteger[numVals];
         int ranVal;
@@ -103,8 +100,6 @@ public class NumberTheory {
         return ranVals;
     }
 
-    // TODO test
-    // Returns list of random values exclusive maxVal
     public BigInteger[] getRandomPosVals(BigInteger maxVal, int numVals){
         BigInteger[] ranVals = new BigInteger[numVals];
 

@@ -80,13 +80,10 @@ public class FastFourierTransform {
                     idxOdd = j + k + (1 << (i-1));
                     rootOfUnityIndex = (rotationGroup[k] % indexMod) * space;
 
-                    //TODO test this!! and give it a better name
                     factor = rootsOfUnity.get(rootOfUnityIndex).times(valuesReversed.get(idxOdd));
 
                     butterflyPluss = valuesReversed.get(idxEven).plus(factor);
                     butterflyMinus = valuesReversed.get(idxEven).minus(factor);
-                    //TODO the numbers are too large this method should have a rounding parameter
-                    //butterflyMinus = butterflyMinus.times(rootsOfUnityInverse.get(rootOfUnityIndex));
 
                     valuesReversed.set(idxEven, butterflyPluss);
                     valuesReversed.set(idxOdd, butterflyMinus);
@@ -97,7 +94,6 @@ public class FastFourierTransform {
     }
 
     public ArrayList<Complex> embeddingInverse(ArrayList<Complex> values){
-        //TODO the parameters should tested and if the parameters are incorrect the user should receive a message
         int totCoefficients = values.size();
 
         ArrayList<Complex> valuesDeepCopy = new ArrayList<>(totCoefficients);
@@ -134,7 +130,6 @@ public class FastFourierTransform {
             }
         }
 
-        //This needs more explanation
         ArrayList<Complex> scalingDownCoefficients = new ArrayList<>(totCoefficients);
         for (int i = 0; i < totCoefficients; i++) {
             scalingDownCoefficients.add(new Complex(BigDecimal.ZERO,BigDecimal.ZERO));

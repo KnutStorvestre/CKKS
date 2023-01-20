@@ -131,14 +131,11 @@ public class FillInVectors {
         });
     }
 
-    // TODO create list for array processing
-    // TODO solution create action listner that launces main!!! :)))
     public static double[] vectorProcessing(String vectorStr){
         vectorStr = vectorStr.replace(" ","");
         vectorStr = vectorStr.replace("[","");
         vectorStr = vectorStr.replace("]","");
         String[] vectorStrSplit = vectorStr.split(",");
-
 
         if (vectorStrSplit.length != vectorSize){
             return null;

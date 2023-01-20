@@ -69,12 +69,6 @@ public class ChineseRemainderTheorem {
                 i++;
             }
 
-            /* TODO nkoapdmgyo
-            // More safe than line below
-            BigInteger randomMultiple = BigInteger.valueOf(ran.nextInt(20));
-            posPrime = posPrime.add(mod.multiply(randomMultiple));
-             */
-            // TODO This is unsafe and just for testing
             posPrime = posPrime.add(mod);
         }
 
@@ -121,7 +115,6 @@ public class ChineseRemainderTheorem {
         return true;
     }
 
-    // TODO explain how this works
     public BigInteger randomBigIntegerMoreThanTwoLessThanPosPrime(BigInteger posPrime){
         BigInteger minLimit = new BigInteger("2");
         BigInteger bigInteger = posPrime.subtract(minLimit);
@@ -134,8 +127,6 @@ public class ChineseRemainderTheorem {
         return res;
     }
 
-    //TODO should have a better name!!
-    //Todo this should also be better explained
     public BigInteger recover(ArrayList<BigInteger> vals){
         BigInteger repVal = BigInteger.ZERO;
         //TODO this should have a better name
