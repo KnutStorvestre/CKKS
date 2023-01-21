@@ -2,9 +2,8 @@ package GUI;
 
 import data.Ciphertext;
 import data.EncodedText;
-import modules.Complex;
+import data.Complex;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 
 public class Vector {

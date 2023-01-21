@@ -1,9 +1,9 @@
 package GUI;
 
-import CKKS.*;
+import CKKSOperations.*;
 import keys.PublicKey;
 import keys.SecretKey;
-import modules.Complex;
+import data.Complex;
 
 import javax.swing.*;
 import java.awt.*;

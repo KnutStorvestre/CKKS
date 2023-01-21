@@ -1,4 +1,4 @@
-package CKKS;
+package CKKSOperations;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 import modules.ChineseRemainderTheorem;

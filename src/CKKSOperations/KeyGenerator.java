@@ -1,9 +1,9 @@
-package CKKS;
+package CKKSOperations;
 
 import keys.PublicKey;
 import keys.SecretKey;
 import modules.NumberTheory;
-import modules.Polynomial;
+import data.Polynomial;
 
 import java.math.BigInteger;
 

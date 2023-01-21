@@ -1,9 +1,9 @@
-import CKKS.*;
+import CKKSOperations.*;
 import data.Ciphertext;
 import data.EncodedText;
 import keys.PublicKey;
 import keys.SecretKey;
-import modules.Complex;
+import data.Complex;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;

@@ -1,10 +1,10 @@
-package CKKS;
+package CKKSOperations;
 
 import data.Ciphertext;
 import data.EncodedText;
 import keys.SecretKey;
 import modules.ChineseRemainderTheorem;
-import modules.Polynomial;
+import data.Polynomial;
 
 import java.math.BigInteger;
 

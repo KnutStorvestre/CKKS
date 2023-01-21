@@ -1,7 +1,6 @@
 package GUI;
 
-import CKKS.Parameters;
-import modules.Polynomial;
+import CKKSOperations.Parameters;
 
 import javax.swing.*;
 import java.awt.*;

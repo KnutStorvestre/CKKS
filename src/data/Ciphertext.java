@@ -1,8 +1,6 @@
 package data;
 
 
-import modules.Polynomial;
-
 import java.math.BigInteger;
 
 public class Ciphertext {

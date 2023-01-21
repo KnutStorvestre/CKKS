@@ -1,4 +1,7 @@
-package modules;
+package data;
+
+import modules.ChineseRemainderTheorem;
+import modules.NumberTheoreticalTransform;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

@@ -1,4 +1,4 @@
-package modules;
+package data;
 
 import ch.obermuhlner.math.big.BigDecimalMath;
 

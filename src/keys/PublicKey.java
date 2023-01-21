@@ -1,6 +1,6 @@
 package keys;
 
-import modules.Polynomial;
+import data.Polynomial;
 
 import java.math.BigInteger;
 

@@ -1,11 +1,11 @@
-package CKKS;
+package CKKSOperations;
 
 import data.Ciphertext;
 import data.EncodedText;
 import keys.PublicKey;
 import modules.ChineseRemainderTheorem;
-import modules.Complex;
-import modules.Polynomial;
+import data.Complex;
+import data.Polynomial;
 
 import java.math.BigInteger;
 import java.util.ArrayList;

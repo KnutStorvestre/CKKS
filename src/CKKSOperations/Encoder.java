@@ -1,9 +1,9 @@
-package CKKS;
+package CKKSOperations;
 
 import data.EncodedText;
-import modules.Complex;
+import data.Complex;
 import modules.FastFourierTransform;
-import modules.Polynomial;
+import data.Polynomial;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
