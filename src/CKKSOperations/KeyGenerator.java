@@ -51,11 +51,11 @@ public class KeyGenerator {
     private PublicKey relinearizationKeyGenerator(){
         Polynomial squaredSecretKeyPolynomial = secretKey.getPoly().multiplicationGaloidField(secretKey.getPoly(),
                 parameters.getBigModulo());
-        PublicKey relinearizationKey = swithchingKeyGenerator(squaredSecretKeyPolynomial);
+        PublicKey relinearizationKey = switchingKeyGenerator(squaredSecretKeyPolynomial);
         return relinearizationKey;
     }
 
-    private PublicKey swithchingKeyGenerator(Polynomial squaredSecretKey){
+    private PublicKey switchingKeyGenerator(Polynomial squaredSecretKey){
         BigInteger bigModSquared = parameters.getBigModulo().multiply(parameters.getBigModulo());
 
         BigInteger[] switchingKeyCoefficients = numTheory.getRandomPosVals(bigModSquared, parameters.getPolynomialDegree().intValue());
