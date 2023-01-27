@@ -40,7 +40,7 @@ public class ParametersInput implements ActionListener {
         polynomialDegree = new BigInteger(String.valueOf(2*vectorSize));
 
         frame = new JFrame();
-        frame.setSize(350, 420);
+        frame.setSize(450, 420);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
         JPanel panel = new JPanel();
@@ -112,7 +112,7 @@ public class ParametersInput implements ActionListener {
         panel.add(done);
 
         success = new JLabel();
-        success.setBounds(100,200,200,25);
+        success.setBounds(100,200,500,25);
         success.setForeground(Color.RED);
         panel.add(success);
 
@@ -146,16 +146,21 @@ public class ParametersInput implements ActionListener {
             success.setText("ERROR: Invalid value(s)!");
         }
         else {
-            int bigModExp = Integer.parseInt(moduloBigTF.getText());
-            int smallModExp = Integer.parseInt(moduloSmallTF.getText());
-            int scalingFactorExp = Integer.parseInt(scalingFactorTF.getText());
-            int millerRabinIterations = Integer.parseInt(millerRabinIterationsTF.getText());
-            int primeBitSize = Integer.parseInt(bitPrimeSizeTF.getText());
-            MathContext mc = new MathContext(100);
-            Parameters parameters = new Parameters(polynomialDegree,BigInteger.TWO.pow(bigModExp),
-                    BigInteger.TWO.pow(smallModExp),BigInteger.TWO.pow(scalingFactorExp),primeBitSize,millerRabinIterations,mc);
-            frame.dispose();
-            CkksOperations ckksOperations = new CkksOperations(vectorValues, sizeVector, totVectors, parameters, mc);
+            if (!(Integer.parseInt(scalingFactorTF.getText()) < Integer.parseInt(moduloSmallTF.getText())  && (Integer.parseInt(moduloSmallTF.getText()) < Integer.parseInt(moduloBigTF.getText())))){
+                success.setText("scaling factor < small modulo < big modulo");
+            }
+            else {
+                int bigModExp = Integer.parseInt(moduloBigTF.getText());
+                int smallModExp = Integer.parseInt(moduloSmallTF.getText());
+                int scalingFactorExp = Integer.parseInt(scalingFactorTF.getText());
+                int millerRabinIterations = Integer.parseInt(millerRabinIterationsTF.getText());
+                int primeBitSize = Integer.parseInt(bitPrimeSizeTF.getText());
+                MathContext mc = new MathContext(100);
+                Parameters parameters = new Parameters(polynomialDegree, BigInteger.TWO.pow(bigModExp),
+                        BigInteger.TWO.pow(smallModExp), BigInteger.TWO.pow(scalingFactorExp), primeBitSize, millerRabinIterations, mc);
+                frame.dispose();
+                CkksOperations ckksOperations = new CkksOperations(vectorValues, sizeVector, totVectors, parameters, mc);
+            }
         }
     }
 
