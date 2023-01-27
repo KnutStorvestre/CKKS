@@ -28,12 +28,12 @@ public class VectorSizeNumGUI implements ActionListener{
 
         panel.setLayout(null);
 
-        numVectorsLable = new JLabel("Num of vectors");
+        numVectorsLable = new JLabel("Number of vectors");
         numVectorsLable.setBounds(10,20,120,25);
         panel.add(numVectorsLable);
 
         numVectorsTF = new JTextField();
-        numVectorsTF.setBounds(110, 20, 165, 25);
+        numVectorsTF.setBounds(130, 20, 165, 25);
         panel.add(numVectorsTF);
 
         vectorSizeLabel = new JLabel("Size of vectors");
@@ -41,7 +41,7 @@ public class VectorSizeNumGUI implements ActionListener{
         panel.add(vectorSizeLabel);
 
         vectorSizeTF = new TextField();
-        vectorSizeTF.setBounds(110, 50, 165, 25);
+        vectorSizeTF.setBounds(130, 50, 165, 25);
         panel.add(vectorSizeTF);
 
         DoneButton = new JButton("Done");
