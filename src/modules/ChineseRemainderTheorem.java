@@ -50,12 +50,8 @@ public class ChineseRemainderTheorem {
         }
     }
 
-    // TODO explain why I cant use strong primes
-    // TODO must generate primes that are
-    //  1 (mod M) = prime
-    //  where M is 2*polyDeg
+    // Each of the primes generated are 1 (mod 2*polyDeg) = prime
     public BigInteger[] generatePrimes(int totPrimes, int primeBitSize, BigInteger polynomialDegree, int millerRabinIterations){
-        // TODO explain why this is look at diyvfcymxy
         BigInteger mod = BigInteger.TWO.multiply(polynomialDegree);
         BigInteger[] primes = new BigInteger[totPrimes];
         BigInteger posPrime;

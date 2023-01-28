@@ -86,7 +86,7 @@ public class Main {
             val0Val1DecodedRoundedB.add(new Complex(bDecoded.get(i).real().round(m), bDecoded.get(i).imag().round(m)));
         }
 
-        System.out.println(secretKey);
+        System.out.println(val0Val1DecodedRoundedA);
     }
 
 }
