@@ -1,7 +1,7 @@
 package CKKSOperations;
 
 import data.Ciphertext;
-import data.EncodedText;
+import data.Plaintext;
 import keys.PublicKey;
 import keys.SecretKey;
 import modules.ChineseRemainderTheorem;
@@ -30,7 +30,7 @@ public class Encryption {
         numTheory = new NumberTheory();
     }
 
-    public Ciphertext encrypt(EncodedText encodedText){
+    public Ciphertext encrypt(Plaintext plaintext){
         Polynomial pubKey0 = publicKey.getP0();
         Polynomial pubKey1 = publicKey.getP1();
 
@@ -44,14 +44,14 @@ public class Encryption {
 
         Polynomial cipherPolynomial0 = pubKey0.multiplicationCRT(randomPoly, crtParameters);
         cipherPolynomial0 = errorPoly0.additionMod(cipherPolynomial0,smallMod);
-        cipherPolynomial0 = cipherPolynomial0.additionMod(encodedText.getPolynomial(), smallMod);
+        cipherPolynomial0 = cipherPolynomial0.additionMod(plaintext.getPolynomial(), smallMod);
         cipherPolynomial0 = cipherPolynomial0.moduloSmall(smallMod);
 
         Polynomial cipherPolynomial1 = pubKey1.multiplicationCRT(randomPoly,crtParameters);
         cipherPolynomial1 = errorPoly1.additionMod(cipherPolynomial1, smallMod);
         cipherPolynomial1 = cipherPolynomial1.moduloSmall(smallMod);
 
-        return new Ciphertext(cipherPolynomial0, cipherPolynomial1, encodedText.getScalingFactor(), smallMod);
+        return new Ciphertext(cipherPolynomial0, cipherPolynomial1, plaintext.getScalingFactor(), smallMod);
     }
 
 }

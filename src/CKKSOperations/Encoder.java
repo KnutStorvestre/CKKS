@@ -1,6 +1,6 @@
 package CKKSOperations;
 
-import data.EncodedText;
+import data.Plaintext;
 import data.Complex;
 import modules.FastFourierTransform;
 import data.Polynomial;
@@ -24,7 +24,7 @@ public class Encoder {
         fft = new FastFourierTransform(polyDegree.multiply(BigInteger.TWO).intValue(), mc);
     }
 
-    public EncodedText encode(ArrayList<Complex> values, BigInteger scaling){
+    public Plaintext encode(ArrayList<Complex> values, BigInteger scaling){
         int totVals = values.size();
         int totEncodedVals = totVals<<1;
 
@@ -43,10 +43,12 @@ public class Encoder {
         BigInteger[] message = Stream.concat(Arrays.stream(msgReal), Arrays.stream(msgImag))
                 .toArray(BigInteger[]::new);
 
-        return new EncodedText(new Polynomial(BigInteger.valueOf(message.length), message),scaling);
+        System.out.println(Arrays.toString(message));
+
+        return new Plaintext(new Polynomial(BigInteger.valueOf(message.length), message),scaling);
     }
 
-    public ArrayList<Complex> decode(EncodedText text){
+    public ArrayList<Complex> decode(Plaintext text){
         BigInteger[] txtCoefficients = text.getPolynomial().getCoefficients();
         BigDecimal scalingFactorBD = new BigDecimal(text.getScalingFactor());
         int encodedLength = txtCoefficients.length;

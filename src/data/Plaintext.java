@@ -3,12 +3,12 @@ package data;
 
 import java.math.BigInteger;
 
-public class EncodedText {
+public class Plaintext {
 
     private Polynomial polynomial;
     private BigInteger scalingFactor;
 
-    public EncodedText(Polynomial poly, BigInteger scaling){
+    public Plaintext(Polynomial poly, BigInteger scaling){
         polynomial = poly;
         scalingFactor = scaling;
     }

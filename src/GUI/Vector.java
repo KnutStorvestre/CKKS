@@ -1,7 +1,7 @@
 package GUI;
 
 import data.Ciphertext;
-import data.EncodedText;
+import data.Plaintext;
 import data.Complex;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 public class Vector {
 
     private ArrayList<Complex> vector;
-    private EncodedText encoded;
+    private Plaintext encoded;
     private Ciphertext encrypted;
 
     /**
@@ -31,7 +31,7 @@ public class Vector {
         this.vector = vector;
     }
 
-    public void setEncoded(EncodedText encoded) {
+    public void setEncoded(Plaintext encoded) {
         this.encoded = encoded;
     }
 
@@ -43,7 +43,7 @@ public class Vector {
         return vector;
     }
 
-    public EncodedText getEncoded() {
+    public Plaintext getEncoded() {
         return encoded;
     }
 

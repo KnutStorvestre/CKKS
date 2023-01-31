@@ -1,7 +1,7 @@
 package CKKSOperations;
 
 import data.Ciphertext;
-import data.EncodedText;
+import data.Plaintext;
 import keys.PublicKey;
 import modules.ChineseRemainderTheorem;
 import data.Complex;
@@ -24,64 +24,64 @@ public class Evaluation {
         crt = params.getCrt();
     }
 
-    public ArrayList<Complex> additionPlaintext(ArrayList<Complex> plain0, ArrayList<Complex> plain1){
-        ArrayList<Complex> result = new ArrayList<>(plain0.size());
+    public ArrayList<Complex> additionMessage(ArrayList<Complex> message0, ArrayList<Complex> message1){
+        ArrayList<Complex> result = new ArrayList<>(message0.size());
 
-        for (int i = 0; i < plain0.size(); i++) {
-            result.add(plain0.get(i).plus(plain1.get(i)));
+        for (int i = 0; i < message0.size(); i++) {
+            result.add(message0.get(i).plus(message1.get(i)));
         }
 
         return result;
     }
 
-    public ArrayList<Complex> subtractionPlaintext(ArrayList<Complex> plain0, ArrayList<Complex> plain1){
-        ArrayList<Complex> result = new ArrayList<>(plain0.size());
+    public ArrayList<Complex> subtractionMessage(ArrayList<Complex> message0, ArrayList<Complex> message1){
+        ArrayList<Complex> result = new ArrayList<>(message0.size());
 
-        for (int i = 0; i < plain0.size(); i++) {
-            result.add(plain0.get(i).minus(plain1.get(i)));
+        for (int i = 0; i < message0.size(); i++) {
+            result.add(message0.get(i).minus(message1.get(i)));
         }
 
         return result;
     }
 
-    public ArrayList<Complex> multiplicationPlaintext(ArrayList<Complex> plain0, ArrayList<Complex> plain1){
-        ArrayList<Complex> result = new ArrayList<>(plain0.size());
+    public ArrayList<Complex> multiplicationMessage(ArrayList<Complex> message0, ArrayList<Complex> message1){
+        ArrayList<Complex> result = new ArrayList<>(message0.size());
 
-        for (int i = 0; i < plain0.size(); i++) {
-            result.add(plain0.get(i).times(plain1.get(i)));
+        for (int i = 0; i < message0.size(); i++) {
+            result.add(message0.get(i).times(message1.get(i)));
         }
 
         return result;
     }
 
-    public EncodedText additionEncodedText(EncodedText encodedText0, EncodedText encodedText1){
-        BigInteger[] encodedText0Coefficients = encodedText0.getPolynomial().getCoefficients();
-        BigInteger[] encodedText1Coefficients = encodedText1.getPolynomial().getCoefficients();
+    public Plaintext additionPlaintext(Plaintext plaintext0, Plaintext plaintext1){
+        BigInteger[] plaintext0Coefficients = plaintext0.getPolynomial().getCoefficients();
+        BigInteger[] plaintext1Coefficients = plaintext1.getPolynomial().getCoefficients();
 
-        BigInteger[] resultCoefficients = new BigInteger[encodedText0Coefficients.length];
-        for (int i = 0; i < encodedText0Coefficients.length; i++) {
-            resultCoefficients[i] = encodedText0Coefficients[i].add(encodedText1Coefficients[i]);
+        BigInteger[] resultCoefficients = new BigInteger[plaintext0Coefficients.length];
+        for (int i = 0; i < plaintext0Coefficients.length; i++) {
+            resultCoefficients[i] = plaintext0Coefficients[i].add(plaintext1Coefficients[i]);
         }
 
-        return new EncodedText(new Polynomial(polyDeg,resultCoefficients),scalingFactor);
+        return new Plaintext(new Polynomial(polyDeg,resultCoefficients),scalingFactor);
     }
 
-    public EncodedText subtractionEncodedText(EncodedText encodedText0, EncodedText encodedText1){
-        BigInteger[] encodedText0Coefficients = encodedText0.getPolynomial().getCoefficients();
-        BigInteger[] encodedText1Coefficients = encodedText1.getPolynomial().getCoefficients();
+    public Plaintext subtractionEncodedText(Plaintext plaintext0, Plaintext plaintext1){
+        BigInteger[] encodedText0Coefficients = plaintext0.getPolynomial().getCoefficients();
+        BigInteger[] encodedText1Coefficients = plaintext1.getPolynomial().getCoefficients();
         BigInteger[] resultCoefficients = new BigInteger[encodedText0Coefficients.length];
         for (int i = 0; i < encodedText0Coefficients.length; i++) {
             resultCoefficients[i] = encodedText0Coefficients[i].subtract(encodedText1Coefficients[i]);
         }
 
-        return new EncodedText(new Polynomial(polyDeg,resultCoefficients),scalingFactor);
+        return new Plaintext(new Polynomial(polyDeg,resultCoefficients),scalingFactor);
     }
 
-    public EncodedText multiplyEncodedText(EncodedText encodedText0, EncodedText encodedText1){
-        Polynomial resultPoly = encodedText0.getPolynomial().multiplicationCRT(encodedText1.getPolynomial(),crt);
+    public Plaintext multiplyEncodedText(Plaintext plaintext0, Plaintext plaintext1){
+        Polynomial resultPoly = plaintext0.getPolynomial().multiplicationCRT(plaintext1.getPolynomial(),crt);
         resultPoly.moduloSmall(scalingFactor);
 
-        return new EncodedText(resultPoly,scalingFactor.multiply(scalingFactor));
+        return new Plaintext(resultPoly,scalingFactor.multiply(scalingFactor));
     }
 
     public Ciphertext additionCiphertext(Ciphertext cipher0, Ciphertext cipher1){

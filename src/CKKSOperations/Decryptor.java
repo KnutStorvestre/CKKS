@@ -1,7 +1,7 @@
 package CKKSOperations;
 
 import data.Ciphertext;
-import data.EncodedText;
+import data.Plaintext;
 import keys.SecretKey;
 import modules.ChineseRemainderTheorem;
 import data.Polynomial;
@@ -20,7 +20,7 @@ public class Decryptor {
         secretKey = sk;
     }
 
-    public EncodedText decrypt(Ciphertext cipher){
+    public Plaintext decrypt(Ciphertext cipher){
         Polynomial cipherPoly0 = cipher.getPoly0();
         Polynomial cipherPoly1 = cipher.getPoly1();
         BigInteger cipherMod = cipher.getModulo();
@@ -29,7 +29,7 @@ public class Decryptor {
         encodedPolynomial = cipherPoly0.additionMod(encodedPolynomial, cipherMod);
         encodedPolynomial = encodedPolynomial.moduloSmall(cipherMod);
 
-        return new EncodedText(encodedPolynomial, cipher.getScaling());
+        return new Plaintext(encodedPolynomial, cipher.getScaling());
     }
 
 }

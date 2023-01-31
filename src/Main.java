@@ -1,6 +1,6 @@
 import CKKSOperations.*;
 import data.Ciphertext;
-import data.EncodedText;
+import data.Plaintext;
 import keys.PublicKey;
 import keys.SecretKey;
 import data.Complex;
@@ -59,8 +59,8 @@ public class Main {
         values1.add(new Complex(twoBD,twoBD));
 
         Encoder encoder = new Encoder(params, mc);
-        EncodedText val0Encoded = encoder.encode(values0, scalingFactor);
-        EncodedText val1Encoded = encoder.encode(values1, scalingFactor);
+        Plaintext val0Encoded = encoder.encode(values0, scalingFactor);
+        Plaintext val1Encoded = encoder.encode(values1, scalingFactor);
 
         Encryption encryper = new Encryption(params, publicKey, secretKey);
         Ciphertext val0Cipher = encryper.encrypt(val0Encoded);
@@ -70,13 +70,13 @@ public class Main {
         Ciphertext val0Val1 = evaluation.additionCiphertext(val0Cipher, val1Cipher);
 
         Decryptor decryptor = new Decryptor(params, secretKey);
-        EncodedText val0Val1Encoded = decryptor.decrypt(val0Val1);
+        Plaintext val0Val1Encoded = decryptor.decrypt(val0Val1);
         ArrayList<Complex> val0Val1Decoded = encoder.decode(val0Val1Encoded);
 
-        EncodedText a = evaluation.multiplyEncodedText(val0Encoded,val1Encoded);
+        Plaintext a = evaluation.multiplyEncodedText(val0Encoded,val1Encoded);
         ArrayList<Complex> aDecoded = encoder.decode(a);
 
-        ArrayList<Complex> bDecoded = evaluation.multiplicationPlaintext(values0,values1);
+        ArrayList<Complex> bDecoded = evaluation.multiplicationMessage(values0,values1);
 
         ArrayList<Complex> val0Val1DecodedRoundedA = new ArrayList<>();
         ArrayList<Complex> val0Val1DecodedRoundedB = new ArrayList<>();

@@ -414,10 +414,10 @@ public class CkksOperations {
                     if (curOpStr.contains("+")){
                         if (curOpStr.contains("V")){
                             levels.add(0);
-                            resultVector.setVector(evaluation.additionPlaintext(vectorPos0.getVector(), vectorPos1.getVector()));
+                            resultVector.setVector(evaluation.additionMessage(vectorPos0.getVector(), vectorPos1.getVector()));
                         } else if (curOpStr.contains("E")) {
                             levels.add(1);
-                            resultVector.setEncoded(evaluation.additionEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
+                            resultVector.setEncoded(evaluation.additionPlaintext(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
                         } else {
                             levels.add(2);
                             resultVector.setEncrypted(evaluation.additionCiphertext(vectorPos0.getEncrypted(), vectorPos1.getEncrypted()));
@@ -425,7 +425,7 @@ public class CkksOperations {
                     } else if (curOpStr.contains("-")) {
                         if (curOpStr.contains("V")){
                             levels.add(0);
-                            resultVector.setVector(evaluation.subtractionPlaintext(vectorPos0.getVector(), vectorPos1.getVector()));
+                            resultVector.setVector(evaluation.subtractionMessage(vectorPos0.getVector(), vectorPos1.getVector()));
                         } else if (curOpStr.contains("E")) {
                             levels.add(1);
                             resultVector.setEncoded(evaluation.subtractionEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
@@ -436,7 +436,7 @@ public class CkksOperations {
                     } else {
                         if (curOpStr.contains("V")) {
                             levels.add(0);
-                            resultVector.setVector(evaluation.multiplicationPlaintext(vectorPos0.getVector(), vectorPos1.getVector()));
+                            resultVector.setVector(evaluation.multiplicationMessage(vectorPos0.getVector(), vectorPos1.getVector()));
                         } else if (curOpStr.contains("E")) {
                             levels.add(1);
                             resultVector.setEncoded(evaluation.multiplyEncodedText(vectorPos0.getEncoded(), vectorPos1.getEncoded()));
