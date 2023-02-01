@@ -64,7 +64,6 @@ public class ParametersInput implements ActionListener {
         bitPrimeSizeLabel.setBounds(10,60,150,25);
         panel.add(bitPrimeSizeLabel);
 
-        // TODO set limit on characters in text field
         bitPrimeSizeTF = new JTextField("500");
         bitPrimeSizeTF.setBounds(160,60,100,25);
         panel.add(bitPrimeSizeTF);
@@ -77,7 +76,6 @@ public class ParametersInput implements ActionListener {
         millerRabinIterationsTF.setBounds(160,80,100,25);
         panel.add(millerRabinIterationsTF);
 
-        // TODO make it more clear that value in text field will be the exponent to base 2!
         descriptionOfBase = new JLabel("All values below has base 2. Set the exponent.");
         descriptionOfBase.setBounds(10,100,350,25);
         panel.add(descriptionOfBase);

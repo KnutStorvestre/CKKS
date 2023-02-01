@@ -54,8 +54,6 @@ public class FillInVectors {
     }
 
     private void createTextFieldLabelButton(JPanel panel, int y, int vectorIndex){
-        // the text field should by default be [0,0,0,0]
-        // user can change to [2+2.5i,0,5.34,2i]
         JLabel numVectorsLable = new JLabel("vector " + vectorIndex);
         numVectorsLable.setBounds(10,y,120,25);
         panel.add(numVectorsLable);

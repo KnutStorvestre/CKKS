@@ -11,7 +11,6 @@ public class NumberTheory {
         ran = new Random();
     }
 
-    // https://en.wikipedia.org/wiki/Modular_multiplicative_inverse
     // ax == 1 (mod m),
     public BigInteger moduloInverse(BigInteger val, BigInteger primeMod){
         return val.modPow(primeMod.subtract(BigInteger.TWO), primeMod);

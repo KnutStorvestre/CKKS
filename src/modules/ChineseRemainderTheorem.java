@@ -32,7 +32,6 @@ public class ChineseRemainderTheorem {
             ntts.add(ntt);
         }
 
-        // TODO explain this section
         modulo = BigInteger.ONE;
         for (BigInteger prime : primes){
              modulo = modulo.multiply(prime);

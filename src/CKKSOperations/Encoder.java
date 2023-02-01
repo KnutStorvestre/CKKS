@@ -43,8 +43,6 @@ public class Encoder {
         BigInteger[] message = Stream.concat(Arrays.stream(msgReal), Arrays.stream(msgImag))
                 .toArray(BigInteger[]::new);
 
-        System.out.println(Arrays.toString(message));
-
         return new Plaintext(new Polynomial(BigInteger.valueOf(message.length), message),scaling);
     }
 
